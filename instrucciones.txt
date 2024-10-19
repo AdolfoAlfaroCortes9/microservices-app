@@ -1,0 +1,37 @@
+#Formato del proyecto
+
+Docker-Microservicios/
+├── microservicios-app/
+│   ├── src/
+│   │   ├── controllers/
+│   │   │   ├── abonadoController.js
+│   │   │   ├── clienteController.js
+│   │   │   ├── servSuplController.js
+│   │   │   └── servSuplAbonadoController.js
+│   │   ├── routes/
+│   │   │   ├── abonadoRoutes.js
+│   │   │   ├── clienteRoutes.js
+│   │   │   ├── servSuplRoutes.js
+│   │   │   └── servSuplAbonadoRoutes.js
+│   │   ├── models/
+│   │   │   ├── abonadoModel.js
+│   │   │   ├── clienteModel.js
+│   │   │   ├── servSuplModel.js
+│   │   │   └── servSuplAbonadoModel.js
+│   │   └── db.js
+│   ├── index.js
+│   ├── Dockerfile
+│   ├── docker-compose.yml
+│   ├── .env
+│   └── package.json
+
+//Crear package.json e instalacion de dependencias por terminal
+
+npm init -y
+npm install express pg dotenv
+
+//Creacion de contenedores por teminal
+
+docker-compose up --build
+
+
