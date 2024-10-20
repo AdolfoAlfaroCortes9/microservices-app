@@ -50,7 +50,9 @@ const createAbonadoController = async (req, res) => {
 const updateAbonadoController = async (req, res) => {
   const isConnected = await checkConnection();
   if (!isConnected) {
-    return res.json({ status: 'no', message: 'No se pudo conectar a la base de datos' });
+    return res.json({ 
+      status: 'no', 
+      message: 'No se pudo conectar a la base de datos' });
   }
   try {
     const updatedAbonado = await Abonado.updateAbonado(req.params['suscriber-number'], req.body);
