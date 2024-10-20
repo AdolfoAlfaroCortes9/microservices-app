@@ -4,12 +4,12 @@ const {
   createAbonadoController, 
   updateAbonadoController, 
   deleteAbonadoController 
-} = require('../controllers/abonadoController.js');
+} = require('../controllers/abonadoController');
 
 const router = express.Router();
 
 // Ruta para obtener un abonado por su número
-router.get('/get-suscriber-number', getAbonadoController);
+router.get('/get-suscriber-number/:suscriber-number', getAbonadoController);
 
 // Ruta para crear un nuevo abonado
 router.post('/create-suscriber', createAbonadoController);

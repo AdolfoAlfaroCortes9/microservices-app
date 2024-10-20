@@ -1,7 +1,7 @@
-const { pool } = require('../db.js');
+const { pool } = require('../db');
 
 // Obtener un abonado
-const getAbonadoById = async (num_abonado) => {
+const getAbonado = async (num_abonado) => {
   const res = await pool.query('SELECT * FROM ga_abocel WHERE num_abonado = $1', [num_abonado]);
   return res.rows[0];
 };
@@ -48,4 +48,4 @@ const deleteAbonado = async (num_abonado) => {
   await pool.query('DELETE FROM ga_abocel WHERE num_abonado = $1', [num_abonado]);
 };
 
-module.exports = { getAbonadoById, createAbonado, updateAbonado, deleteAbonado };
+module.exports = { getAbonado, createAbonado, updateAbonado, deleteAbonado };

@@ -1,13 +1,7 @@
-const { pool } = require('../db.js');
-
-// Obtener todos los productos
-const getAllProductos = async () => {
-  const res = await pool.query('SELECT * FROM ge_productos');
-  return res.rows;
-};
+const { pool } = require('../db');
 
 // Obtener un producto por su código
-const getProductoById = async (cod_producto) => {
+const getProducto = async (cod_producto) => {
   const res = await pool.query('SELECT * FROM ge_productos WHERE cod_producto = $1', [cod_producto]);
   return res.rows[0];
 };
@@ -38,8 +32,7 @@ const deleteProducto = async (cod_producto) => {
 };
 
 module.exports = { 
-  getAllProductos, 
-  getProductoById, 
+  getProducto, 
   createProducto, 
   updateProducto, 
   deleteProducto 

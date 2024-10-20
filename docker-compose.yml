@@ -9,9 +9,9 @@ services:
       - "3000:3000"
     environment:
       - DB_HOST=db
-      - DB_PORT=5432
+      - DB_PORT=5432  # Este debe ser el puerto interno del contenedor PostgreSQL
       - DB_USER=postgres
-      - DB_PASSWORD=${DB_PASSWORD}  # Así referenciamos la variable definida en el archivo .env
+      - DB_PASSWORD=2620ac 
       - DB_DATABASE=microservices_db
     depends_on:
       - db
@@ -24,10 +24,10 @@ services:
     container_name: microservicios-db
     image: postgres:17
     ports:
-      - "5433:5432"
+      - "5433:5432"  # Exponemos el puerto 5433 en la máquina host, pero internamente es el puerto 5432
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 2620ac  # Define aquí la contraseña de la base de datos
+      POSTGRES_PASSWORD: 2620ac  
       POSTGRES_DB: microservices_db
     volumes:
       - postgres-data:/var/lib/postgresql/data

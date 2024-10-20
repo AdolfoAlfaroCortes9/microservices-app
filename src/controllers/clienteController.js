@@ -1,8 +1,8 @@
-const Cliente = require('../models/clienteModel.js');
-const { checkConnection } = require('../db.js');
+const Cliente = require('../models/clienteModel');
+const { checkConnection } = require('../db');
 
 // Obtener un cliente por su código
-const getCliente = async (req, res) => {
+const getClienteController = async (req, res) => {
   const isConnected = await checkConnection();
   if (!isConnected) {
     return res.json({ 
@@ -10,20 +10,26 @@ const getCliente = async (req, res) => {
       message: 'No se pudo conectar a la base de datos' 
     });
   }
-
   try {
-    const cliente = await Cliente.getClienteById(req.query['customer-code']);
+    const cliente = await Cliente.getCliente(req.query['customer-code']);
     if (!cliente) {
-      return res.json({ status: 'no', message: 'No existe ese dato en la tabla GE_CLIENTES' });
+      return res.json({ 
+        status: 'no', 
+        message: 'No existe ese dato en la tabla GE_CLIENTES' });
     }
-    res.json({ status: 'si', message: 'Cliente encontrado', data: cliente });
+    res.json({ 
+      status: 'si', 
+      message: 'Cliente encontrado', 
+      data: cliente });
   } catch (error) {
-    res.status(500).json({ status: 'no', message: error.message });
+    res.status(500).json({ 
+      status: 'no', 
+      message: error.message });
   }
 };
 
 // Crear un nuevo cliente
-const createCliente = async (req, res) => {
+const createClienteController = async (req, res) => {
   const isConnected = await checkConnection();
   if (!isConnected) {
     return res.json({ status: 'no', message: 'No se pudo conectar a la base de datos' });
@@ -37,7 +43,7 @@ const createCliente = async (req, res) => {
 };
 
 // Actualizar un cliente existente
-const updateCliente = async (req, res) => {
+const updateClienteController = async (req, res) => {
   const isConnected = await checkConnection();
   if (!isConnected) {
     return res.json({ status: 'no', message: 'No se pudo conectar a la base de datos' });
@@ -54,7 +60,7 @@ const updateCliente = async (req, res) => {
 };
 
 // Eliminar un cliente
-const deleteCliente = async (req, res) => {
+const deleteClienteController = async (req, res) => {
   const isConnected = await checkConnection();
   if (!isConnected) {
     return res.json({ status: 'no', message: 'No se pudo conectar a la base de datos' });
@@ -68,8 +74,8 @@ const deleteCliente = async (req, res) => {
 };
 
 module.exports = { 
-  getCliente, 
-  createCliente, 
-  updateCliente, 
-  deleteCliente 
+  getClienteController, 
+  createClienteController, 
+  updateClienteController, 
+  deleteClienteController 
 };

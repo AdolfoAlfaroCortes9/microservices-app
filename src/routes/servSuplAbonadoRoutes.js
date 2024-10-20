@@ -1,27 +1,23 @@
 const express = require('express');
 const { 
-  getAllServiciosSuplAbonados, 
-  getServicioSuplAbonado, 
-  createServicioSuplAbonado, 
-  updateServicioSuplAbonado, 
-  deleteServicioSuplAbonado 
-} = require('../controllers/servSuplAbonadoController.js');
+  getServicioSuplAbonadoController, 
+  createServicioSuplAbonadoController, 
+  updateServicioSuplAbonadoController, 
+  deleteServicioSuplAbonadoController 
+} = require('../controllers/servSuplAbonadoController');
 
 const router = express.Router();
 
-// Ruta para obtener todos los servicios suplementarios de abonados
-router.get('/get-all-abonado-supplementary', getAllServiciosSuplAbonados);
-
 // Ruta para obtener un servicio suplementario de abonado
-router.get('/get-abonado-supplementary', getServicioSuplAbonado);
+router.get('/get-abonado-supplementary:abonado-number/:service-code', getServicioSuplAbonadoController);
 
 // Ruta para crear un nuevo servicio suplementario de abonado
-router.post('/create-abonado-supplementary', createServicioSuplAbonado);
+router.post('/create-abonado-supplementary', createServicioSuplAbonadoController);
 
 // Ruta para actualizar un servicio suplementario de abonado
-router.put('/update-abonado-supplementary/:abonado-number/:service-code', updateServicioSuplAbonado);
+router.put('/update-abonado-supplementary/:abonado-number/:service-code', updateServicioSuplAbonadoController);
 
 // Ruta para eliminar un servicio suplementario de abonado
-router.delete('/delete-abonado-supplementary/:abonado-number/:service-code', deleteServicioSuplAbonado);
+router.delete('/delete-abonado-supplementary/:abonado-number/:service-code', deleteServicioSuplAbonadoController);
 
 module.exports = router;

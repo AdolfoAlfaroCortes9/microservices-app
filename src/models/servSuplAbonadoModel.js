@@ -1,13 +1,7 @@
-const { pool } = require('../db.js');
-
-// Obtener todos los servicios suplementarios de abonados
-const getAllServiciosSuplAbonados = async () => {
-  const res = await pool.query('SELECT * FROM ga_servsuplabo');
-  return res.rows;
-};
+const { pool } = require('../db');
 
 // Obtener un servicio suplementario de abonado por número de abonado y código de servicio
-const getServicioSuplAbonadoById = async (num_abonado, cod_servicio) => {
+const getServicioSuplAbonado = async (num_abonado, cod_servicio) => {
   const res = await pool.query('SELECT * FROM ga_servsuplabo WHERE num_abonado = $1 AND cod_servicio = $2', [num_abonado, cod_servicio]);
   return res.rows[0];
 };
@@ -54,9 +48,8 @@ const deleteServicioSuplAbonado = async (num_abonado, cod_servicio) => {
   await pool.query('DELETE FROM ga_servsuplabo WHERE num_abonado = $1 AND cod_servicio = $2', [num_abonado, cod_servicio]);
 };
 
-module.exports = { 
-  getAllServiciosSuplAbonados, 
-  getServicioSuplAbonadoById, 
+module.exports = {  
+  getServicioSuplAbonado, 
   createServicioSuplAbonado, 
   updateServicioSuplAbonado, 
   deleteServicioSuplAbonado 

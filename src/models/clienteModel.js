@@ -1,7 +1,7 @@
-const { pool } = require('../db.js');
+const { pool } = require('../db');
 
 // Obtener un cliente por su código
-const getClienteById = async (cod_cliente) => {
+const getCliente = async (cod_cliente) => {
   const res = await pool.query('SELECT * FROM ge_clientes WHERE cod_cliente = $1', [cod_cliente]);
   return res.rows[0];
 };
@@ -55,7 +55,7 @@ const deleteCliente = async (cod_cliente) => {
 };
 
 module.exports = {  
-  getClienteById, 
+  getCliente, 
   createCliente, 
   updateCliente, 
   deleteCliente 

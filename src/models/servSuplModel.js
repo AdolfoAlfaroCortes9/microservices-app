@@ -1,14 +1,8 @@
-const { pool } = require('../db.js');
-
-// Obtener todos los servicios suplementarios
-const getAllServiciosSuplementarios = async () => {
-  const res = await pool.query('SELECT * FROM GA_SERVSUPL');
-  return res.rows;
-};
+const { pool } = require('../db');
 
 // Obtener un servicio suplementario por su código de producto y código de servicio
-const getServicioSuplementarioById = async (cod_producto, cod_servicio) => {
-  const res = await pool.query('SELECT * FROM GA_SERVSUPL WHERE COD_PRODUCTO = $1 AND COD_SERVICIO = $2', [cod_producto, cod_servicio]);
+const getServicioSuplementario = async (cod_producto, cod_servicio) => {
+  const res = await pool.query('SELECT * FROM ga_servsupl WHERE cod_producto = $1 AND cod_servicio = $2', [cod_producto, cod_servicio]);
   return res.rows[0];
 };
 
@@ -49,7 +43,7 @@ const createServicioSuplementario =  async (servicioSuplementario) => {
 const updateServicioSuplementario = async (cod_producto, cod_servicio, servicioSuplementario) => {
   const { cod_servsupl, cod_nivel, des_servicio, ind_autman } = servicioSuplementario;
   const res = await pool.query(
-    'UPDATE GA_SERVSUPL SET COD_SERVSUPL = $1, COD_NIVEL = $2, DES_SERVICIO = $3, IND_AUTMAN = $4 WHERE COD_PRODUCTO = $5 AND COD_SERVICIO = $6 RETURNING *',
+    'UPDATE ga_servsupl SET cod_servsupl = $1, cod_nivel = $2, DES_SERVICIO = $3, IND_AUTMAN = $4 WHERE cod_producto = $5 AND cod_servicio = $6 RETURNING *',
     [cod_servsupl, cod_nivel, des_servicio, ind_autman, cod_producto, cod_servicio]
   );
   return res.rows[0];
@@ -57,12 +51,11 @@ const updateServicioSuplementario = async (cod_producto, cod_servicio, servicioS
 
 // Eliminar un servicio suplementario
 const deleteServicioSuplementario = async (cod_producto, cod_servicio) => {
-  await pool.query('DELETE FROM GA_SERVSUPL WHERE COD_PRODUCTO = $1 AND COD_SERVICIO = $2', [cod_producto, cod_servicio]);
+  await pool.query('DELETE FROM ga_servsupl WHERE cod_producto = $1 AND cod_servicio = $2', [cod_producto, cod_servicio]);
 };
 
 module.exports = { 
-  getAllServiciosSuplementarios, 
-  getServicioSuplementarioById, 
+  getServicioSuplementario, 
   createServicioSuplementario, 
   updateServicioSuplementario, 
   deleteServicioSuplementario 

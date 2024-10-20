@@ -3,9 +3,9 @@ const { Pool } = require('pg');
 
 const pool = new Pool({
   host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
+  port: process.env.DB_PORT,  // Este debe ser el puerto interno de PostgreSQL, generalmente 5432
   user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD || '',  // Si no hay contraseña, usa una cadena vacía
+  password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
 });
 
