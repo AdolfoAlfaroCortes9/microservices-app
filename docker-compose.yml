@@ -9,12 +9,13 @@ services:
       - "3000:3000"
     environment:
       - DB_HOST=db
-      - DB_PORT=5432  # Este debe ser el puerto interno del contenedor PostgreSQL
+      - DB_PORT=5432
       - DB_USER=postgres
-      - DB_PASSWORD=2620ac 
+      - DB_PASSWORD=2620ac
       - DB_DATABASE=microservices_db
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
       - .:/app
     networks:
@@ -24,15 +25,20 @@ services:
     container_name: microservicios-db
     image: postgres:17
     ports:
-      - "5433:5432"  # Exponemos el puerto 5433 en la máquina host, pero internamente es el puerto 5432
+      - "5433:5432"
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 2620ac  
+      POSTGRES_PASSWORD: 2620ac
       POSTGRES_DB: microservices_db
     volumes:
       - postgres-data:/var/lib/postgresql/data
     networks:
       - microservice-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   postgres-data:

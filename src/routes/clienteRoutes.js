@@ -9,7 +9,7 @@ const {
 const router = express.Router();
 
 // Ruta para obtener un cliente por su código
-router.get('/get-customer-data', getClienteController);
+router.get('/get-customer-data/:customer-code', getClienteController);
 
 // Ruta para crear un nuevo cliente
 router.post('/create-customer', createClienteController);

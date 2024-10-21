@@ -7,23 +7,28 @@ const getAbonadoController = async (req, res) => {
   if (!isConnected) {
     return res.json({ 
       status: 'no', 
-      message: 'No se pudo conectar a la base de datos' });
+      message: 'No se pudo conectar a la base de datos' 
+    });
   }
   try {
-    const abonado = await Abonado.getAbonado(req.params['suscriber-number']);
+    // Aquí accedemos al parámetro de consulta
+    const abonado = await Abonado.getAbonado(req.query['suscriber-number']);
     if (!abonado) {
       return res.json({ 
         status: 'no', 
-        message: 'No existe el abonado' });
+        message: 'No existe el abonado' 
+      });
     }
     res.json({ 
       status: 'si', 
       message: 'Abonado encontrado', 
-      data: abonado });
+      data: abonado 
+    });
   } catch (error) {
     res.status(500).json({ 
       status: 'no', 
-      message: error.message });
+      message: error.message 
+    });
   }
 };
 

@@ -14,13 +14,27 @@ const checkDB = async () => {
   const connected = await checkConnection();
   if (connected) {
     console.log('✅ Conexión a la base de datos establecida');
+    return true;
   } else {
     console.error('❌ Error al conectar a la base de datos');
+    return false;
   }
 };
 
-// Llamar a la función para verificar la conexión en segundo plano
-checkDB();
+// Iniciar el servidor solo si la conexión a la base de datos es exitosa
+const startServer = async () => {
+  const dbConnected = await checkDB();
+  if (!dbConnected) {
+    console.error('🚨 Servidor detenido debido a problemas de conexión a la base de datos');
+    return;  // Detener el arranque del servidor si no se conecta a la base de datos
+  }
+
+  // Iniciar el servidor
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+  });
+};
 
 // Rutas de la API
 app.use('/suscriber-manager-services', abonadoRoutes);
@@ -29,10 +43,5 @@ app.use('/product-manager-services', productoRoutes);
 app.use('/supplementary-services', servSuplRoutes);
 app.use('/abonado-supplementary-services', servSuplAbonadoRoutes);
 
-// Iniciar el servidor
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-  // Al iniciar el servidor, hacemos la verificación de la base de datos
-  checkDB();
-});
+// Llamar a la función para iniciar el servidor
+startServer();

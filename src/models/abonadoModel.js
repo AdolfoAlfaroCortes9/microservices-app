@@ -29,7 +29,7 @@ const createAbonado = async (abonado) => {
       meses_minimo, ind_procequi, ind_preciolista, ind_gmc
     ]
   );
-
+ 
   return res.rows[0];
 };
 

@@ -32,7 +32,10 @@ npm install express pg dotenv
 
 //Creacion de contenedores por teminal
 
-docker-compose down
 docker-compose up --build
+
+//Cerrar los contenedores
+
+docker-compose down
 
 
