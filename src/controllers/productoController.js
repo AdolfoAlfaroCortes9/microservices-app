@@ -1,22 +1,34 @@
 const Producto = require('../models/productoModel');
 const { checkConnection } = require('../db');
 
-// Obtener un producto por su código
+//Obtener un producto especifico
 const getProductoController = async (req, res) => {
   const isConnected = await checkConnection();
   if (!isConnected) {
-    return res.json({ status: 'denied', message: 'No se pudo conectar a la base de datos' });
-  }
-  const producto = await Producto.getProducto(req.query['product-code']);
-  if (!producto) {
     return res.json({ 
       status: 'denied', 
-      message: 'No existe ese dato en la tabla GE_PRODUCTOS' });
+      message: 'No se pudo conectar a la base de datos' 
+    });
   }
-  res.json({ 
+  try {
+    const producto = await Producto.getProducto(req.query['product-code']);
+    if (!producto) {
+      return res.json({ 
+        status: 'denied', 
+        message: 'No existe ese producto' 
+      });
+    }
+    res.json({ 
       status: 'success', 
       message: 'Producto encontrado', 
-      data: producto });
+      data: producto 
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      status: 'no', 
+      message: error.message 
+    });
+  }
 };
 
 // Crear un nuevo producto
@@ -25,18 +37,21 @@ const createProductoController = async (req, res) => {
   if (!isConnected) {
     return res.json({ 
       status: 'denied', 
-      message: 'No se pudo conectar a la base de datos' });
+      message: 'No se pudo conectar a la base de datos' 
+    });
   }
   try {
     const newProducto = await Producto.createProducto(req.body);
     res.status(201).json({ 
       status: 'success', 
       message: 'Producto creado', 
-      data: newProducto });
+      data: newProducto 
+    });
   } catch (error) {
     res.status(500).json({ 
       status: 'denied', 
-      message: error.message });
+      message: error.message 
+    });
   }
 };
 
@@ -75,13 +90,18 @@ const deleteProductoController = async (req, res) => {
       message: 'No se pudo conectar a la base de datos' });
   }
   try {
-    await Producto.deleteProducto(req.params['product-code']);
-    res.status(204).send({ 
-      status: 'success', 
+    const deletedProducto = await Abonado.deleteAbonado(req.query['product-code']); 
+    if (!deletedProducto) {
+      return res.status(404).json({ 
+        status: 'no', 
+        message: 'No existe ese abonado en la base de datos' });
+    }
+    res.status(200).json({ 
+      status: 'si', 
       message: 'Producto eliminado' });
   } catch (error) {
     res.status(500).json({ 
-      status: 'denied', 
+      status: 'no', 
       message: error.message });
   }
 };

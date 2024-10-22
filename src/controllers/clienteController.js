@@ -32,13 +32,20 @@ const getClienteController = async (req, res) => {
 const createClienteController = async (req, res) => {
   const isConnected = await checkConnection();
   if (!isConnected) {
-    return res.json({ status: 'no', message: 'No se pudo conectar a la base de datos' });
+    return res.json({ 
+      status: 'no', 
+      message: 'No se pudo conectar a la base de datos' });
   }
   try {
     const newCliente = await Cliente.createCliente(req.body);
-    res.status(201).json({ status: 'si', message: 'Cliente creado', data: newCliente });
+    res.status(201).json({ 
+      status: 'si', 
+      message: 'Cliente creado', 
+      data: newCliente });
   } catch (error) {
-    res.status(500).json({ status: 'no', message: error.message });
+    res.status(500).json({ 
+      status: 'no', 
+      message: error.message });
   }
 };
 
@@ -46,16 +53,25 @@ const createClienteController = async (req, res) => {
 const updateClienteController = async (req, res) => {
   const isConnected = await checkConnection();
   if (!isConnected) {
-    return res.json({ status: 'no', message: 'No se pudo conectar a la base de datos' });
+    return res.json({ 
+      status: 'no', 
+      message: 'No se pudo conectar a la base de datos' });
   }
   try {
     const updatedCliente = await Cliente.updateCliente(req.params['customer-code'], req.body);
     if (!updatedCliente) {
-      return res.json({ status: 'no', message: 'No existe ese dato en la tabla GE_CLIENTES' });
+      return res.json({ 
+        status: 'no', 
+        message: 'No existe ese cliente' });
     }
-    res.json({ status: 'si', message: 'Cliente actualizado', data: updatedCliente });
+    res.json({ 
+      status: 'si', 
+      message: 'Cliente actualizado', 
+      data: updatedCliente });
   } catch (error) {
-    res.status(500).json({ status: 'no', message: error.message });
+    res.status(500).json({ 
+      status: 'no', 
+      message: error.message });
   }
 };
 
@@ -63,13 +79,27 @@ const updateClienteController = async (req, res) => {
 const deleteClienteController = async (req, res) => {
   const isConnected = await checkConnection();
   if (!isConnected) {
-    return res.json({ status: 'no', message: 'No se pudo conectar a la base de datos' });
+    return res.json({ 
+      status: 'no', 
+      message: 'No se pudo conectar a la base de datos' 
+    });
   }
   try {
-    await Cliente.deleteCliente(req.params['customer-code']);
-    res.status(204).send({ status: 'si', message: 'Cliente eliminado' });
+    const deletedCliente = await Cliente.deleteCliente(req.params['customer-code']); 
+    if (!deletedCliente) {
+      return res.status(404).json({ 
+        status: 'no', 
+        message: 'No existe el cliente ingresado' 
+      });
+    }
+    res.status(200).json({ 
+      status: 'si', 
+      message: 'Cliente eliminado', 
+      data: deletedCliente });
   } catch (error) {
-    res.status(500).json({ status: 'no', message: error.message });
+    res.status(500).json({ 
+      status: 'no', 
+      message: error.message });
   }
 };
 

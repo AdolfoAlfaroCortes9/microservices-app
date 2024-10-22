@@ -15,9 +15,9 @@ router.get('/get-product', getProductoController);
 router.post('/create-product', createProductoController);
 
 // Ruta para actualizar un producto existente
-router.put('/update-product/:product-code', updateProductoController);
+router.put('/update-product', updateProductoController);
 
 // Ruta para eliminar un producto
-router.delete('/delete-product/:product-code', deleteProductoController);
+router.delete('/delete-product', deleteProductoController);
 
 module.exports = router;

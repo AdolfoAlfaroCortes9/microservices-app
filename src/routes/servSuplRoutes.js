@@ -15,9 +15,9 @@ router.get('/get-supplementary-service', getServicioSuplementarioController);
 router.post('/create-supplementary-service', createServicioSuplementarioController);
 
 // Ruta para actualizar un servicio suplementario
-router.put('/update-supplementary-service/:product-code/:service-code', updateServicioSuplementarioController);
+router.put('/update-supplementary-service', updateServicioSuplementarioController);
 
 // Ruta para eliminar un servicio suplementario
-router.delete('/delete-supplementary-service/:product-code/:service-code', deleteServicioSuplementarioController);
+router.delete('/delete-supplementary-service', deleteServicioSuplementarioController);
 
 module.exports = router;

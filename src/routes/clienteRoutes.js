@@ -9,15 +9,15 @@ const {
 const router = express.Router();
 
 // Ruta para obtener un cliente por su código
-router.get('/get-customer-data/:customer-code', getClienteController);
+router.get('/get-customer-data', getClienteController);
 
 // Ruta para crear un nuevo cliente
 router.post('/create-customer', createClienteController);
 
 // Ruta para actualizar un cliente existente
-router.put('/update-customer/:customer-code', updateClienteController);
+router.put('/update-customer', updateClienteController);
 
 // Ruta para eliminar un cliente
-router.delete('/delete-customer/:customer-code', deleteClienteController);
+router.delete('/delete-customer', deleteClienteController);
 
 module.exports = router;

@@ -11,7 +11,6 @@ const getAbonadoController = async (req, res) => {
     });
   }
   try {
-    // Aquí accedemos al parámetro de consulta
     const abonado = await Abonado.getAbonado(req.query['suscriber-number']);
     if (!abonado) {
       return res.json({ 
@@ -32,7 +31,7 @@ const getAbonadoController = async (req, res) => {
   }
 };
 
-// Crear un abonado
+//Crear un abonado
 const createAbonadoController = async (req, res) => {
   const isConnected = await checkConnection();
   if (!isConnected) {
@@ -42,16 +41,18 @@ const createAbonadoController = async (req, res) => {
   }
   try {
     const newAbonado = await Abonado.createAbonado(req.body);
-    res.status(201).json({ 
+    res.status(201).json({
       status: 'si', 
       message: 'Abonado creado', 
       data: newAbonado });
   } catch (error) {
-    res.status(500).json({ status: 'no', message: error.message });
+    res.status(500).json({ 
+      status: 'no', 
+      message: error.message });
   }
 };
 
-// Actualizar un abonado existente
+// Actualizar un abonado existente usando query string
 const updateAbonadoController = async (req, res) => {
   const isConnected = await checkConnection();
   if (!isConnected) {
@@ -60,11 +61,12 @@ const updateAbonadoController = async (req, res) => {
       message: 'No se pudo conectar a la base de datos' });
   }
   try {
-    const updatedAbonado = await Abonado.updateAbonado(req.params['suscriber-number'], req.body);
+    const updatedAbonado = await Abonado.updateAbonado(req.query['suscriber-number'], req.body); // Usamos query string
     if (!updatedAbonado) {
       return res.json({ 
         status: 'no', 
-        message: 'No existe ese dato en la tabla GA_ABOCEL' });
+        message: 'No existe ese abonado en la base de datos' }
+      );
     }
     res.json({ 
       status: 'si', 
@@ -77,7 +79,7 @@ const updateAbonadoController = async (req, res) => {
   }
 };
 
-// Eliminar un abonado
+// Eliminar un abonado usando query string
 const deleteAbonadoController = async (req, res) => {
   const isConnected = await checkConnection();
   if (!isConnected) {
@@ -86,8 +88,13 @@ const deleteAbonadoController = async (req, res) => {
       message: 'No se pudo conectar a la base de datos' });
   }
   try {
-    await Abonado.deleteAbonado(req.params['suscriber-number']);
-    res.status(204).send({ 
+    const deletedAbonado = await Abonado.deleteAbonado(req.query['suscriber-number']); 
+    if (!deletedAbonado) {
+      return res.status(404).json({ 
+        status: 'no', 
+        message: 'No existe ese abonado en la base de datos' });
+    }
+    res.status(200).json({ 
       status: 'si', 
       message: 'Abonado eliminado' });
   } catch (error) {

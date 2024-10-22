@@ -38,4 +38,8 @@ docker-compose up --build
 
 docker-compose down
 
+//Formato de postman para requests
+
+localhost:3000/suscriber-manager-services/x_servicio?llave_servicio=x_llave
+
 
