@@ -7,18 +7,30 @@ const getServicioSuplementarioController = async (req, res) => {
   if (!isConnected) {
     return res.json({ 
       status: 'no', 
-      message: 'No se pudo conectar a la base de datos' });
+      message: 'No se pudo conectar a la base de datos' 
+    });
   }
-  const servicio = await ServicioSuplementario.getServicioSuplementario(req.query['product-code'], req.query['service-code']);
-  if (!servicio) {
-    return res.json({ 
+
+  try {
+    const servicio = await ServicioSuplementario.getServicioSuplementario(req.query['product-code'], req.query['service-code']);
+    if (!servicio) {
+      return res.json({ 
+        status: 'no', 
+        message: 'No existe ese servicio suplementario' 
+      });
+    }
+
+    res.json({ 
+      status: 'si', 
+      message: 'Servicio encontrado', 
+      data: servicio 
+    });
+  } catch (error) {
+    res.status(500).json({ 
       status: 'no', 
-      message: 'No existe ese dato en la tabla GA_SERVSUPL' });
+      message: error.message 
+    });
   }
-  res.json({ 
-    status: 'si', 
-    message: 'Servicio encontrado', 
-    data: servicio });
 };
 
 // Crear un nuevo servicio suplementario
@@ -55,7 +67,7 @@ const updateServicioSuplementarioController = async (req, res) => {
     if (!updatedServicio) {
       return res.json({ 
         status: 'no', 
-        message: 'No existe ese dato en la tabla GA_SERVSUPL' });
+        message: 'No existe ese servicio suplementario' });
     }
     res.json({ 
       status: 'si', 
@@ -78,7 +90,7 @@ const deleteServicioSuplementarioController = async (req, res) => {
   }
   try {
     await ServicioSuplementario.deleteServicioSuplementario(req.params['product-code'], req.params['service-code']);
-    res.status(204).send({ 
+    res.status(200).json({ 
       status: 'si', 
       message: 'Servicio suplementario eliminado' });
   } catch (error) {
