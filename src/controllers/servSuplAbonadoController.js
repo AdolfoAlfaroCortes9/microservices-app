@@ -33,24 +33,38 @@ const getServicioSuplAbonadoController = async (req, res) => {
   }
 };
 
-// Crear un nuevo servicio suplementario de abonado
+// **Crear un nuevo servicio suplementario de abonado**
 const createServicioSuplAbonadoController = async (req, res) => {
   const isConnected = await checkConnection();
   if (!isConnected) {
     return res.json({ 
       status: 'no', 
-      message: 'No se pudo conectar a la base de datos' });
+      message: 'No se pudo conectar a la base de datos' 
+    });
   }
+
   try {
+    // Verificar si el servicio suplementario de abonado ya existe
+    const existingServicio = await SuplAbonado.getServicioSuplAbonado(req.body.abonado_number, req.body.service_code);
+    if (existingServicio) {
+      return res.status(409).json({ 
+        status: 'no', 
+        message: 'El servicio suplementario de abonado ya existe en la base de datos' 
+      });
+    }
+
+    // Crear el servicio suplementario si no existe
     const newServicio = await SuplAbonado.createServicioSuplAbonado(req.body);
     res.status(201).json({ 
       status: 'si', 
       message: 'Servicio suplementario de abonado creado', 
-      data: newServicio });
+      data: newServicio 
+    });
   } catch (error) {
     res.status(500).json({ 
       status: 'no', 
-      message: error.message });
+      message: error.message 
+    });
   }
 };
 

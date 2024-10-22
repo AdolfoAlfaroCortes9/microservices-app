@@ -40,7 +40,18 @@ const createProductoController = async (req, res) => {
       message: 'No se pudo conectar a la base de datos' 
     });
   }
+
   try {
+    // Verificar si el producto ya existe
+    const existingProducto = await Producto.getProductoById(req.body.cod_producto); // Suponiendo que 'cod_producto' es único
+    if (existingProducto) {
+      return res.status(409).json({ 
+        status: 'denied', 
+        message: 'El producto ya existe en la base de datos' 
+      });
+    }
+
+    // Crear el producto si no existe
     const newProducto = await Producto.createProducto(req.body);
     res.status(201).json({ 
       status: 'success', 

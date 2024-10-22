@@ -6,7 +6,7 @@ const getAbonadoController = async (req, res) => {
   const isConnected = await checkConnection();
   if (!isConnected) {
     return res.json({ 
-      status: 'no', 
+      status: 'denied', 
       message: 'No se pudo conectar a la base de datos' 
     });
   }
@@ -14,41 +14,56 @@ const getAbonadoController = async (req, res) => {
     const abonado = await Abonado.getAbonado(req.query['suscriber-number']);
     if (!abonado) {
       return res.json({ 
-        status: 'no', 
+        status: 'denied', 
         message: 'No existe el abonado' 
       });
     }
     res.json({ 
-      status: 'si', 
+      status: 'success', 
       message: 'Abonado encontrado', 
       data: abonado 
     });
   } catch (error) {
     res.status(500).json({ 
-      status: 'no', 
+      status: 'denied', 
       message: error.message 
     });
   }
 };
 
-//Crear un abonado
+// Crear un abonado
 const createAbonadoController = async (req, res) => {
   const isConnected = await checkConnection();
   if (!isConnected) {
     return res.json({ 
-      status: 'no', 
-      message: 'No se pudo conectar a la base de datos' });
+      status: 'denied', 
+      message: 'No se pudo conectar a la base de datos' 
+    });
   }
+
   try {
+    // Verificar si el abonado ya existe
+    const existingAbonado = await Abonado.getAbonadoById(req.body.num_abonado); // Suponiendo que num_abonado es único
+    if (existingAbonado) {
+      return res.status(409).json({
+        status: 'denied', 
+        message: 'El abonado ya existe en la base de datos'
+      });
+    }
+
+    // Crear el abonado si no existe
     const newAbonado = await Abonado.createAbonado(req.body);
     res.status(201).json({
-      status: 'si', 
+      status: 'success', 
       message: 'Abonado creado', 
-      data: newAbonado });
+      data: newAbonado
+    });
+    
   } catch (error) {
     res.status(500).json({ 
-      status: 'no', 
-      message: error.message });
+      status: 'denied', 
+      message: error.message 
+    });
   }
 };
 
@@ -57,24 +72,24 @@ const updateAbonadoController = async (req, res) => {
   const isConnected = await checkConnection();
   if (!isConnected) {
     return res.json({ 
-      status: 'no', 
+      status: 'denied', 
       message: 'No se pudo conectar a la base de datos' });
   }
   try {
     const updatedAbonado = await Abonado.updateAbonado(req.query['suscriber-number'], req.body); // Usamos query string
     if (!updatedAbonado) {
       return res.json({ 
-        status: 'no', 
+        status: 'denied', 
         message: 'No existe ese abonado en la base de datos' }
       );
     }
     res.json({ 
-      status: 'si', 
+      status: 'success', 
       message: 'Abonado actualizado', 
       data: updatedAbonado });
   } catch (error) {
     res.status(500).json({ 
-      status: 'no', 
+      status: 'denied', 
       message: error.message });
   }
 };
@@ -84,22 +99,22 @@ const deleteAbonadoController = async (req, res) => {
   const isConnected = await checkConnection();
   if (!isConnected) {
     return res.json({ 
-      status: 'no', 
+      status: 'denied', 
       message: 'No se pudo conectar a la base de datos' });
   }
   try {
     const deletedAbonado = await Abonado.deleteAbonado(req.query['suscriber-number']); 
     if (!deletedAbonado) {
       return res.status(404).json({ 
-        status: 'no', 
+        status: 'denied', 
         message: 'No existe ese abonado en la base de datos' });
     }
     res.status(200).json({ 
-      status: 'si', 
+      status: 'success', 
       message: 'Abonado eliminado' });
   } catch (error) {
     res.status(500).json({ 
-      status: 'no', 
+      status: 'denied', 
       message: error.message });
   }
 };

@@ -39,18 +39,32 @@ const createServicioSuplementarioController = async (req, res) => {
   if (!isConnected) {
     return res.json({ 
       status: 'no', 
-      message: 'No se pudo conectar a la base de datos' });
+      message: 'No se pudo conectar a la base de datos' 
+    });
   }
+
   try {
+    // Verificar si el servicio suplementario ya existe
+    const existingServicio = await ServicioSuplementario.getServicioSuplementario(req.body.product_code, req.body.service_code);
+    if (existingServicio) {
+      return res.status(409).json({ 
+        status: 'no', 
+        message: 'El servicio suplementario ya existe en la base de datos' 
+      });
+    }
+
+    // Crear el servicio suplementario si no existe
     const newServicio = await ServicioSuplementario.createServicioSuplementario(req.body);
     res.status(201).json({ 
       status: 'si', 
       message: 'Servicio suplementario creado', 
-      data: newServicio });
+      data: newServicio 
+    });
   } catch (error) {
     res.status(500).json({ 
       status: 'no', 
-      message: error.message });
+      message: error.message 
+    });
   }
 };
 
