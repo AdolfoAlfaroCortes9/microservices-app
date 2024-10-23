@@ -40,6 +40,34 @@ docker-compose down
 
 //Formato de postman para requests
 
-localhost:3000/suscriber-manager-services/x_servicio?llave_servicio=x_llave
+Metodo: get
+Formato: localhost:3000/suscriber-manager-services/x_servicio?llave_servicio=x_llave
+
+Opción: post
+Formato: localhost:3000/suscriber-manager-services/x_crearservicio
+Seleccionar la opción Body en Postman.
+Luego elige la opción raw.
+Ingresar los datos a generar segun las columnas de la tabla
+
+{
+    x dato,
+    ... ,
+    n dato
+}
+
+Metodo: put
+Formato: localhost:3000/suscriber-manager-services/x_crearservicio
+Luego elige la opción raw.
+Ingresar los datos restantes que no sean llaves a modificar segun las columnas de la tabla
+
+{
+    x dato,
+    ... ,
+    n dato
+}
+
+Metodo: delete
+Formato: localhost:3000/suscriber-manager-services/x_servicio?llave_servicio=x_llave
+
 
 
