@@ -43,7 +43,7 @@ const createProductoController = async (req, res) => {
 
   try {
     // Verificar si el producto ya existe
-    const existingProducto = await Producto.createProducto(req.body.cod_producto); // Suponiendo que 'cod_producto' es único
+    const existingProducto = await Producto.getProducto(req.body.cod_producto); // Suponiendo que 'cod_producto' es único
     if (existingProducto) {
       return res.status(409).json({ 
         status: 'denied', 
