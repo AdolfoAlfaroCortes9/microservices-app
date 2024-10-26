@@ -258,7 +258,7 @@ GET:
 - http://localhost:3000/product-manager-services/get-product?product-code=2001
 
 POST:
-- http://localhost:3000/product-manager-servicess/create-product
+- http://localhost:3000/product-manager-services/create-product
 
 Body -> raw
 
@@ -271,7 +271,7 @@ Body -> raw
 Hacer lo mismo con un dato no existente*
 
 PUT:
-- http://localhost:3000/product-manager-services/update-customer?product-code=2001
+- http://localhost:3000/product-manager-services/update-product?product-code=2001
 
 Body -> raw
 
@@ -326,7 +326,7 @@ Body -> raw
 Hacer lo mismo con uno existente para que salga el error de que ya existe*
 
 PUT:
-- http://localhost:3000/supplementary-services/update-customer?product-code=1001&service-code=S01
+- http://localhost:3000/supplementary-services/update-supplementary-service?product-code=1001&service-code=S01
 
 Body -> raw
 
@@ -338,8 +338,8 @@ Body -> raw
 Hacer lo mismo con un dato no existente*
 
 DELETE:
-- http://localhost:3000/supplementary-services/delete-customer?product-code=1001&service-code=S01
-- http://localhost:3000/supplementary-services/delete-customer?product-code=2&service-code=S
+- http://localhost:3000/supplementary-services/delete-supplementary-service?product-code=1001&service-code=S01
+- http://localhost:3000/supplementary-services/delete-supplementary-service?product-code=2&service-code=S
 
 Hacer lo mismo con uno existente para que salga el error de que ya existente
 

@@ -43,7 +43,7 @@ const createAbonadoController = async (req, res) => {
 
   try {
     // Verificar si el abonado ya existe
-    const existingAbonado = await Abonado.createAbonado(req.body.num_abonado); // Suponiendo que num_abonado es único
+    const existingAbonado = await Abonado.getAbonado(req.body.num_abonado); // Suponiendo que num_abonado es único
     if (existingAbonado) {
       return res.status(409).json({
         status: 'denied', 
