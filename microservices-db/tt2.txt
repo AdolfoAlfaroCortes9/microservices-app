@@ -1,589 +1,392 @@
-ALTER TABLE TA_PLANTARIF ADD (
-  CONSTRAINT FK_PLANTARIF_LIMCONSUMO 
-  FOREIGN KEY (COD_PRODUCTO, COD_LIMCONSUMO) 
-  REFERENCES TA_LIMCONSUMO (COD_PRODUCTO,COD_LIMCONSUMO)  DISABLE,
-  CONSTRAINT FK_PLANTARIF_PRODUCTO 
-  FOREIGN KEY (COD_PRODUCTO) 
-  REFERENCES GE_PRODUCTOS (COD_PRODUCTO)  DISABLE);
-
-ALTER TABLE GE_SUCURSALES ADD (
-  CONSTRAINT FK_GE_SUCURSALES_GE_BANCOS 
-  FOREIGN KEY (COD_BANCO) 
-  REFERENCES GE_BANCOS (COD_BANCO)  DISABLE);
-
-ALTER TABLE GE_PROVINCIAS ADD (
-  CONSTRAINT FK_PROVINCIA_REGION 
-  FOREIGN KEY (COD_REGION) 
-  REFERENCES GE_REGIONES (COD_REGION)  DISABLE);
-
-ALTER TABLE GE_COMUNAS ADD (
-  CONSTRAINT FK_COMUNA_PROVINCIA 
-  FOREIGN KEY (COD_PROVINCIA, COD_REGION) 
-  REFERENCES GE_PROVINCIAS (COD_PROVINCIA,COD_REGION)  DISABLE);
-
-ALTER TABLE GE_OFICINAS ADD (
-  CONSTRAINT FK_GEOFIC_GECOMUNA 
-  FOREIGN KEY (COD_REGION, COD_PROVINCIA, COD_COMUNA) 
-  REFERENCES GE_COMUNAS (COD_REGION,COD_PROVINCIA,COD_COMUNA)  DISABLE,
-  CONSTRAINT FK_GEOFIC_GEPROVINC 
-  FOREIGN KEY (COD_PROVINCIA, COD_REGION) 
-  REFERENCES GE_PROVINCIAS (COD_PROVINCIA,COD_REGION)  DISABLE,
-  CONSTRAINT FK_GEOFIC_GEREGION 
-  FOREIGN KEY (COD_REGION) 
-  REFERENCES GE_REGIONES (COD_REGION)  DISABLE);
-
-ALTER TABLE GA_CUENTAS ADD (
-  CONSTRAINT FK_CUENTA_CATEGORIA 
-  FOREIGN KEY (COD_CATEGORIA) 
-  REFERENCES GE_CATEGORIAS (COD_CATEGORIA)  DISABLE,
-  CONSTRAINT FK_CUENTA_CLASCTA 
-  FOREIGN KEY (COD_CLASCTA) 
-  REFERENCES GE_CLASCTA (COD_CLASCTA)  DISABLE,
-  CONSTRAINT FK_CUENTA_TIPIDENT 
-  FOREIGN KEY (COD_TIPIDENT) 
-  REFERENCES GE_TIPIDENT (COD_TIPIDENT)  DISABLE);
-
-ALTER TABLE GE_ALMS ADD (
-  CONSTRAINT GE_ALMS_OPSC_FK 
-  FOREIGN KEY (COD_OPERADORA_SCL) 
-  REFERENCES GE_OPERADORA_SCL (COD_OPERADORA_SCL)  DISABLE);
-
-ALTER TABLE ICG_SISTEMA ADD (
-  CONSTRAINT FK_ICGSIS_ICGESC 
-  FOREIGN KEY (COD_ESTADO) 
-  REFERENCES ICG_ESTADO_CENTRAL (COD_ESTADO)  DISABLE,
-  CONSTRAINT FK_ICGSIS_ICGINT 
-  FOREIGN KEY (COD_INTERFAZ) 
-  REFERENCES ICG_INTERFAZ (COD_INTERFAZ)  DISABLE,
-  CONSTRAINT FK_ICGSIS_ICGLEN 
-  FOREIGN KEY (COD_LENGUAJE) 
-  REFERENCES ICG_LENGUAJE (COD_LENGUAJE)  DISABLE);
-
-ALTER TABLE ICG_CENTRAL ADD (
-  CONSTRAINT FK_ICGCEN_GEALMS 
-  FOREIGN KEY (COD_ALM) 
-  REFERENCES GE_ALMS (COD_ALM)  DISABLE,
-  CONSTRAINT FK_ICGCEN_GEPROD 
-  FOREIGN KEY (COD_PRODUCTO) 
-  REFERENCES GE_PRODUCTOS (COD_PRODUCTO)  DISABLE,
-  CONSTRAINT FK_ICGCEN_ICGSIS 
-  FOREIGN KEY (COD_SISTEMA) 
-  REFERENCES ICG_SISTEMA (COD_SISTEMA)  DISABLE);
-
-ALTER TABLE GE_CLIENTES ADD (
-  CONSTRAINT FK_CLIENTES_ACTIVIDADES 
-  FOREIGN KEY (COD_ACTIVIDAD) 
-  REFERENCES GE_ACTIVIDADES (COD_ACTIVIDAD)  DISABLE,
-  CONSTRAINT FK_CLIENTES_BANCOS 
-  FOREIGN KEY (COD_BANCOTARJ) 
-  REFERENCES GE_BANCOS (COD_BANCO)  DISABLE,
-  CONSTRAINT FK_CLIENTES_CALCLIENTE 
-  FOREIGN KEY (COD_CALCLIEN) 
-  REFERENCES GE_CALCLIENTE (COD_CALCLIEN)  DISABLE,
-  CONSTRAINT FK_CLIENTES_CATEGORIA 
-  FOREIGN KEY (COD_CATEGORIA) 
-  REFERENCES GE_CATEGORIAS (COD_CATEGORIA)  DISABLE,
-  CONSTRAINT FK_CLIENTES_OFICINAS 
-  FOREIGN KEY (COD_OFICINA) 
-  REFERENCES GE_OFICINAS (COD_OFICINA)  DISABLE,
-  CONSTRAINT FK_CLIENTES_PAISES 
-  FOREIGN KEY (COD_PAIS) 
-  REFERENCES GE_PAISES (COD_PAIS)  DISABLE,
-  CONSTRAINT FK_CLIENTES_SISPAGO 
-  FOREIGN KEY (COD_SISPAGO) 
-  REFERENCES GE_SISPAGO (COD_SISPAGO)  DISABLE,
-  CONSTRAINT FK_CLIENTES_SUCURSALES 
-  FOREIGN KEY (COD_BANCO, COD_SUCURSAL) 
-  REFERENCES GE_SUCURSALES (COD_BANCO,COD_SUCURSAL)  DISABLE,
-  CONSTRAINT FK_CLIENTES_TIPIDENT 
-  FOREIGN KEY (COD_TIPIDENT) 
-  REFERENCES GE_TIPIDENT (COD_TIPIDENT)  DISABLE,
-  CONSTRAINT FK_CLIENTES_TIPIDENTAPOR 
-  FOREIGN KEY (COD_TIPIDENTAPOR) 
-  REFERENCES GE_TIPIDENT (COD_TIPIDENT)  DISABLE,
-  CONSTRAINT FK_CLIENTES_TIPIDTRIB 
-  FOREIGN KEY (COD_TIPIDTRIB) 
-  REFERENCES GE_TIPIDENT (COD_TIPIDENT)  DISABLE,
-  CONSTRAINT FK_CLIENTES_TIPTARJETAS 
-  FOREIGN KEY (COD_TIPTARJETA) 
-  REFERENCES GE_TIPTARJETAS (COD_TIPTARJETA)  DISABLE;
-
-ALTER TABLE GA_TIPCONTRATO ADD (
-  CONSTRAINT FK_TIPCONTRATO_PRODUCTO 
-  FOREIGN KEY (COD_PRODUCTO) 
-  REFERENCES GE_PRODUCTOS (COD_PRODUCTO)  DISABLE);
-
-ALTER TABLE GA_PLANSERV ADD (
-  CONSTRAINT FK_PLANSERV_PRODUCTO 
-  FOREIGN KEY (COD_PRODUCTO) 
-  REFERENCES GE_PRODUCTOS (COD_PRODUCTO)  DISABLE);
-
-ALTER TABLE GA_ABOCEL ADD (
-  CONSTRAINT FK_ABOCEL_CELDAS 
-  FOREIGN KEY (COD_CELDA) 
-  REFERENCES GE_CELDAS (COD_CELDA)  DISABLE,
-  CONSTRAINT FK_ABOCEL_CENTPLEX 
-  FOREIGN KEY (COD_PRODUCTO, COD_CENTRAL_PLEX) 
-  REFERENCES ICG_CENTRAL (COD_PRODUCTO,COD_CENTRAL)  DISABLE,
-  CONSTRAINT FK_ABOCEL_CENTRALES 
-  FOREIGN KEY (COD_PRODUCTO, COD_CENTRAL) 
-  REFERENCES ICG_CENTRAL (COD_PRODUCTO,COD_CENTRAL)  DISABLE,
-  CONSTRAINT FK_ABOCEL_CICLOS 
-  FOREIGN KEY (COD_CICLO) 
-  REFERENCES FA_CICLOS (COD_CICLO)  DISABLE,
-  CONSTRAINT FK_ABOCEL_CLIENTES 
-  FOREIGN KEY (COD_CLIENTE) 
-  REFERENCES GE_CLIENTES (COD_CLIENTE)  DISABLE,
-  CONSTRAINT FK_ABOCEL_MODVENTA 
-  FOREIGN KEY (COD_MODVENTA) 
-  REFERENCES GE_MODVENTA (COD_MODVENTA)  DISABLE,
-  CONSTRAINT FK_ABOCEL_PLANSERV 
-  FOREIGN KEY (COD_PRODUCTO, COD_PLANSERV) 
-  REFERENCES GA_PLANSERV (COD_PRODUCTO,COD_PLANSERV)  DISABLE,
-  CONSTRAINT FK_ABOCEL_PRODUCTOS 
-  FOREIGN KEY (COD_PRODUCTO) 
-  REFERENCES GE_PRODUCTOS (COD_PRODUCTO)  DISABLE,
-  CONSTRAINT FK_ABOCEL_SITUABO 
-  FOREIGN KEY (COD_SITUACION) 
-  REFERENCES GA_SITUABO (COD_SITUACION)  DISABLE,
-  CONSTRAINT FK_ABOCEL_TIPCONTRATO 
-  FOREIGN KEY (COD_PRODUCTO, COD_TIPCONTRATO) 
-  REFERENCES GA_TIPCONTRATO (COD_PRODUCTO,COD_TIPCONTRATO)  DISABLE,
-  CONSTRAINT FK_ABOCEL_USOS 
-  FOREIGN KEY (COD_USO) 
-  REFERENCES AL_USOS (COD_USO)  DISABLE,
-  CONSTRAINT VE_OFIC_ABOC_OFIPPAL_FK 
-  FOREIGN KEY (COD_OFICINA_PRINCIPAL) 
-  REFERENCES GE_OFICINAS (COD_OFICINA)  DISABLE);
-
-ALTER TABLE GA_SERVSUPL ADD (
-  CONSTRAINT FK_SERVSUPL_NIVELSERVICIO 
-  FOREIGN KEY (COD_PRODUCTO, COD_SERVSUPL, COD_NIVEL) 
-  REFERENCES ICG_NIVELSERVICIO (COD_PRODUCTO,COD_SERVICIO,COD_NIVEL)  DISABLE);
-
-ALTER TABLE CI_ORSERV ADD (
-  CONSTRAINT FK_CI_ORSERV_CI_TIPORSERV 
-  FOREIGN KEY (COD_OS) 
-  REFERENCES CI_TIPORSERV (COD_OS)  DISABLE);
-
-----------------------------------------------------------
-
---COD_PRODUCTO (entidades relacionadas: TA_PLANTARIF, GE_PRODUCTOS, ICG_CENTRAL, GA_TIPCONTRATO, GA_PLANSERV, GA_ABOCEL, ICG_NIVELSERVICIO, GA_SERVSUPL, GA_SERVSUPLABO)
-
-ALTER TABLE TA_PLANTARIF
-ADD CONSTRAINT FK_TA_PLANTARIF_PRODUCTO
-FOREIGN KEY (COD_PRODUCTO)
-REFERENCES GE_PRODUCTOS (COD_PRODUCTO);
-
-ALTER TABLE ICG_CENTRAL
-ADD CONSTRAINT FK_ICG_CENTRAL_PRODUCTO
-FOREIGN KEY (COD_PRODUCTO)
-REFERENCES GE_PRODUCTOS (COD_PRODUCTO);
-
-ALTER TABLE GA_TIPCONTRATO
-ADD CONSTRAINT FK_GA_TIPCONTRATO_PRODUCTO
-FOREIGN KEY (COD_PRODUCTO)
-REFERENCES GE_PRODUCTOS (COD_PRODUCTO);
-
-ALTER TABLE GA_PLANSERV
-ADD CONSTRAINT FK_GA_PLANSERV_PRODUCTO
-FOREIGN KEY (COD_PRODUCTO)
-REFERENCES GE_PRODUCTOS (COD_PRODUCTO);
-
-ALTER TABLE GA_ABOCEL
-ADD CONSTRAINT FK_GA_ABOCEL_PRODUCTO
-FOREIGN KEY (COD_PRODUCTO)
-REFERENCES GE_PRODUCTOS (COD_PRODUCTO);
-
-ALTER TABLE ICG_NIVELSERVICIO
-ADD CONSTRAINT FK_ICG_NIVELSERVICIO_PRODUCTO
-FOREIGN KEY (COD_PRODUCTO)
-REFERENCES GE_PRODUCTOS (COD_PRODUCTO);
-
-ALTER TABLE GA_SERVSUPL
-ADD CONSTRAINT FK_GA_SERVSUPL_PRODUCTO
-FOREIGN KEY (COD_PRODUCTO)
-REFERENCES GE_PRODUCTOS (COD_PRODUCTO);
-
-ALTER TABLE GA_SERVSUPLABO
-ADD CONSTRAINT FK_GA_SERVSUPLABO_PRODUCTO
-FOREIGN KEY (COD_PRODUCTO)
-REFERENCES GE_PRODUCTOS (COD_PRODUCTO);
-
---COD_PLANTARIF (entidades relacionadas: TA_PLANTARIF, GA_ABOCEL, GA_INTARCEL)
-
-ALTER TABLE TA_PLANTARIF ADD CONSTRAINT UQ_TA_PLANTARIF_COD_PLANTARIF UNIQUE (COD_PLANTARIF);
-ALTER TABLE GA_ABOCEL ADD CONSTRAINT FK_GA_ABOCEL_PLANTARIF FOREIGN KEY (COD_PLANTARIF) REFERENCES TA_PLANTARIF(COD_PLANTARIF);
-ALTER TABLE GA_INTARCEL ADD CONSTRAINT FK_GA_INTARCEL_PLANTARIF FOREIGN KEY (COD_PLANTARIF) REFERENCES TA_PLANTARIF(COD_PLANTARIF);
-
---COD_CATEGORIA (entidades relacionadas: GE_CATEGORIAS, GA_CUENTAS, GE_CLIENTES)
-
-ALTER TABLE GE_CATEGORIAS ADD CONSTRAINT UQ_GE_CATEGORIAS_COD_CATEGORIA UNIQUE (COD_CATEGORIA);
-ALTER TABLE GA_CUENTAS ADD CONSTRAINT FK_GA_CUENTAS_COD_CATEGORIA FOREIGN KEY (COD_CATEGORIA) REFERENCES GE_CATEGORIAS(COD_CATEGORIA);
-ALTER TABLE GE_CLIENTES ADD CONSTRAINT FK_GE_CLIENTES_COD_CATEGORIA FOREIGN KEY (COD_CATEGORIA) REFERENCES GE_CATEGORIAS(COD_CATEGORIA);
-
---COD_CLASCTA (entidades relacionadas: GE_CLASCTA, GA_CUENTAS)
-
-ALTER TABLE GE_CLASCTA ADD CONSTRAINT UQ_GE_CLASCTA_COD_CLASCTA UNIQUE (COD_CLASCTA);
-ALTER TABLE GA_CUENTAS ADD CONSTRAINT FK_GA_CUENTAS_COD_CLASCTA FOREIGN KEY (COD_CLASCTA) REFERENCES GE_CLASCTA(COD_CLASCTA);
-
---COD_TIPIDENT (entidades relacionadas: GE_TIPIDENT, GA_CUENTAS, GE_CLIENTES)
-
-ALTER TABLE GA_CUENTAS
-ADD CONSTRAINT FK_GA_CUENTAS_TIPIDENT
-FOREIGN KEY (COD_TIPIDENT)
-REFERENCES GE_TIPIDENT (COD_TIPIDENT);
-
-ALTER TABLE GE_CLIENTES
-ADD CONSTRAINT FK_GE_CLIENTES_TIPIDENT
-FOREIGN KEY (COD_TIPIDENT)
-REFERENCES GE_TIPIDENT (COD_TIPIDENT);
-
---COD_TIPTARJETA (entidades relacionadas: GE_TIPTARJETAS, GE_CLIENTES)
-
-ALTER TABLE GE_CLIENTES
-ADD CONSTRAINT FK_GE_CLIENTES_TIPTARJETA
-FOREIGN KEY (COD_TIPTARJETA)
-REFERENCES GE_TIPTARJETAS (COD_TIPTARJETA);
-
---COD_BANCO (entidades relacionadas: GE_SUCURSALES, GE_BANCOS, GE_CLIENTES)
-
-ALTER TABLE GE_SUCURSALES
-ADD CONSTRAINT FK_GE_SUCURSALES_BANCO
-FOREIGN KEY (COD_BANCO)
-REFERENCES GE_BANCOS (COD_BANCO);
-
-ALTER TABLE GE_CLIENTES
-ADD CONSTRAINT FK_GE_CLIENTES_BANCO
-FOREIGN KEY (COD_BANCO)
-REFERENCES GE_BANCOS (COD_BANCO);
-
---COD_SUCURSAL (entidades relacionadas: GE_SUCURSALES, GE_CLIENTES)
-
-ALTER TABLE GE_CLIENTES
-ADD CONSTRAINT FK_GE_CLIENTES_SUCURSAL
-FOREIGN KEY (COD_BANCO, COD_SUCURSAL)
-REFERENCES GE_SUCURSALES (COD_BANCO, COD_SUCURSAL);
-
---COD_SISPAGO (entidades relacionadas: GE_SISPAGO, GE_CLIENTES)
-ALTER TABLE GE_CLIENTES
-ADD CONSTRAINT FK_GE_CLIENTES_SISPAGO
-FOREIGN KEY (COD_SISPAGO)
-REFERENCES GE_SISPAGO (COD_SISPAGO);
-
---COD_PAIS (entidades relacionadas: GE_PAISES, GE_CLIENTES)
-
-ALTER TABLE GE_CLIENTES
-ADD CONSTRAINT FK_GE_CLIENTES_PAIS
-FOREIGN KEY (COD_PAIS)
-REFERENCES GE_PAISES (COD_PAIS);
-
---COD_REGION (entidades relacionadas: GE_REGIONES, GE_PROVINCIAS, GE_COMUNAS, GE_OFICINAS, GA_ABOCEL)
-
-ALTER TABLE GE_PROVINCIAS
-ADD CONSTRAINT FK_GE_PROVINCIAS_REGION
-FOREIGN KEY (COD_REGION)
-REFERENCES GE_REGIONES (COD_REGION);
-
-ALTER TABLE GE_COMUNAS
-ADD CONSTRAINT FK_GE_COMUNAS_REGION
-FOREIGN KEY (COD_REGION)
-REFERENCES GE_REGIONES (COD_REGION);
-
-ALTER TABLE GE_OFICINAS
-ADD CONSTRAINT FK_GE_OFICINAS_REGION
-FOREIGN KEY (COD_REGION)
-REFERENCES GE_REGIONES (COD_REGION);
-
-ALTER TABLE GA_ABOCEL
-ADD CONSTRAINT FK_GA_ABOCEL_REGION
-FOREIGN KEY (COD_REGION)
-REFERENCES GE_REGIONES (COD_REGION);
-
---COD_PROVINCIA (entidades relacionadas: GE_PROVINCIAS, GE_COMUNAS, GE_OFICINAS, GA_ABOCEL)
-
-ALTER TABLE GE_COMUNAS
-ADD CONSTRAINT FK_GE_COMUNAS_PROVINCIA
-FOREIGN KEY (COD_PROVINCIA, COD_REGION)
-REFERENCES GE_PROVINCIAS (COD_PROVINCIA, COD_REGION);
-
-ALTER TABLE GE_OFICINAS
-ADD CONSTRAINT FK_GE_OFICINAS_PROVINCIA
-FOREIGN KEY (COD_PROVINCIA, COD_REGION)
-REFERENCES GE_PROVINCIAS (COD_PROVINCIA, COD_REGION);
-
-ALTER TABLE GA_ABOCEL
-ADD CONSTRAINT FK_GA_ABOCEL_PROVINCIA
-FOREIGN KEY (COD_PROVINCIA, COD_REGION)
-REFERENCES GE_PROVINCIAS (COD_PROVINCIA, COD_REGION);
-
---COD_COMUNA (entidades relacionadas: GE_COMUNAS, GE_OFICINAS)
-
-ALTER TABLE GE_OFICINAS
-ADD CONSTRAINT FK_GE_OFICINAS_COMUNA
-FOREIGN KEY (COD_COMUNA, COD_PROVINCIA, COD_REGION)
-REFERENCES GE_COMUNAS (COD_COMUNA, COD_PROVINCIA, COD_REGION);
-
---COD_OFICINA (entidades relacionadas: GE_OFICINAS, GE_CLIENTES)
-
-ALTER TABLE GE_CLIENTES
-ADD CONSTRAINT FK_GE_CLIENTES_OFICINA
-FOREIGN KEY (COD_OFICINA)
-REFERENCES GE_OFICINAS (COD_OFICINA);
-
---COD_CALCLIEN (entidades relacionadas: GE_CALCLIENTE, GE_CLIENTES)
-
-ALTER TABLE GE_CLIENTES
-ADD CONSTRAINT FK_GE_CLIENTES_CALCLIEN
-FOREIGN KEY (COD_CALCLIEN)
-REFERENCES GE_CALCLIENTE (COD_CALCLIEN);
-
---COD_ACTIVIDAD (entidades relacionadas: GE_ACTIVIDADES, GE_CLIENTES)
-
-ALTER TABLE GE_CLIENTES
-ADD CONSTRAINT FK_GE_CLIENTES_ACTIVIDAD
-FOREIGN KEY (COD_ACTIVIDAD)
-REFERENCES GE_ACTIVIDADES (COD_ACTIVIDAD);
-
---COD_CUENTA (entidades relacionadas: GA_CUENTAS, GE_CLIENTES, GA_ABOCEL)
-
-ALTER TABLE GE_CLIENTES
-ADD CONSTRAINT FK_GE_CLIENTES_CUENTA
-FOREIGN KEY (COD_CUENTA)
-REFERENCES GA_CUENTAS (COD_CUENTA);
-
-ALTER TABLE GA_ABOCEL
-ADD CONSTRAINT FK_GA_ABOCEL_CUENTA
-FOREIGN KEY (COD_CUENTA)
-REFERENCES GA_CUENTAS (COD_CUENTA);
-
---COD_ALM (entidades relacionadas: GE_ALMS, ICG_CENTRAL)
-
-ALTER TABLE ICG_CENTRAL
-ADD CONSTRAINT FK_ICG_CENTRAL_ALM
-FOREIGN KEY (COD_ALM)
-REFERENCES GE_ALMS (COD_ALM);
-
---COD_ESTADO (entidades relacionadas: ICG_SISTEMA, GA_ABOCEL, CI_ORSERV)
-
-ALTER TABLE ICG_SISTEMA
-ADD CONSTRAINT UQ_ICG_SISTEMA_COD_ESTADO UNIQUE (COD_ESTADO);
-
-ALTER TABLE GA_ABOCEL
-ADD CONSTRAINT FK_GA_ABOCEL_ESTADO
-FOREIGN KEY (COD_ESTADO)
-REFERENCES ICG_SISTEMA (COD_ESTADO);
-
-ALTER TABLE CI_ORSERV
-ADD CONSTRAINT FK_CI_ORSERV_ESTADO
-FOREIGN KEY (COD_ESTADO)
-REFERENCES ICG_SISTEMA (COD_ESTADO);
-
---COD_CENTRAL (entidades relacionadas: ICG_CENTRAL, GA_ABOCEL)
-
-ALTER TABLE ICG_CENTRAL
-ADD CONSTRAINT UQ_ICG_CENTRAL_COD_CENTRAL UNIQUE (COD_CENTRAL);
-
-ALTER TABLE GA_ABOCEL
-ADD CONSTRAINT FK_GA_ABOCEL_CENTRAL
-FOREIGN KEY (COD_CENTRAL)
-REFERENCES ICG_CENTRAL (COD_CENTRAL);
-
---COD_MODVENTA (entidades relacionadas: GE_MODVENTA, GA_ABOCEL)
-
-ALTER TABLE GA_ABOCEL
-ADD CONSTRAINT FK_GA_ABOCEL_MODVENTA
-FOREIGN KEY (COD_MODVENTA)
-REFERENCES GE_MODVENTA (COD_MODVENTA);
-
---COD_CLIENTE (entidades relacionadas: GE_CLIENTES, GA_ABOCEL, GA_INTARCEL)
-
-ALTER TABLE GA_ABOCEL
-ADD CONSTRAINT FK_GA_ABOCEL_CLIENTE
-FOREIGN KEY (COD_CLIENTE)
-REFERENCES GE_CLIENTES (COD_CLIENTE);
-
-ALTER TABLE GA_INTARCEL
-ADD CONSTRAINT FK_GA_INTARCEL_CLIENTE
-FOREIGN KEY (COD_CLIENTE)
-REFERENCES GE_CLIENTES (COD_CLIENTE);
-
---COD_CELDA (entidades relacionadas: GE_CELDAS, GA_ABOCEL, GA_INTARCEL)
-
-ALTER TABLE GA_ABOCEL
-ADD CONSTRAINT FK_GA_ABOCEL_CELDA
-FOREIGN KEY (COD_CELDA)
-REFERENCES GE_CELDAS (COD_CELDA);
-
-ALTER TABLE GA_INTARCEL
-ADD CONSTRAINT FK_GA_INTARCEL_CELDA
-FOREIGN KEY (COD_CELDA)
-REFERENCES GE_CELDAS (COD_CELDA);
-
---COD_TIPCONTRATO (entidades relacionadas: GA_TIPCONTRATO, GA_ABOCEL)
-
-ALTER TABLE GA_ABOCEL
-ADD CONSTRAINT FK_GA_ABOCEL_TIPCONTRATO
-FOREIGN KEY (COD_TIPCONTRATO, COD_PRODUCTO)
-REFERENCES GA_TIPCONTRATO (COD_TIPCONTRATO, COD_PRODUCTO);
-
---COD_PLANSERV (entidades relacionadas: GA_PLANSERV, GA_ABOCEL, GA_INTARCEL)
-
-ALTER TABLE GA_ABOCEL
-ADD CONSTRAINT FK_GA_ABOCEL_PLANSERV
-FOREIGN KEY (COD_PLANSERV, COD_PRODUCTO)
-REFERENCES GA_PLANSERV (COD_PLANSERV, COD_PRODUCTO);
-
-ALTER TABLE GA_PLANSERV
-ADD CONSTRAINT UQ_GA_PLANSERV_COD_PLANSERV UNIQUE (COD_PLANSERV);
-
-ALTER TABLE GA_INTARCEL
-ADD CONSTRAINT FK_GA_INTARCEL_PLANSERV
-FOREIGN KEY (COD_PLANSERV)
-REFERENCES GA_PLANSERV (COD_PLANSERV);
-
---COD_CICLO (entidades relacionadas: GE_CLIENTES, FA_CICLOS, GA_ABOCEL, GA_INTARCEL)
-
-ALTER TABLE GE_CLIENTES
-ADD CONSTRAINT FK_GE_CLIENTES_CICLO
-FOREIGN KEY (COD_CICLO)
-REFERENCES FA_CICLOS (COD_CICLO);
-
-ALTER TABLE GA_ABOCEL
-ADD CONSTRAINT FK_GA_ABOCEL_CICLO
-FOREIGN KEY (COD_CICLO)
-REFERENCES FA_CICLOS (COD_CICLO);
-
-ALTER TABLE GA_INTARCEL
-ADD CONSTRAINT FK_GA_INTARCEL_CICLO
-FOREIGN KEY (COD_CICLO)
-REFERENCES FA_CICLOS (COD_CICLO);
-
---NUM_ABONADO (entidades relacionadas: TA_PLANTARIF, GA_ABOCEL, GA_SERVSUPLABO, GA_INTARCEL)
-
-ALTER TABLE GA_SERVSUPLABO
-ADD CONSTRAINT FK_GA_SERVSUPLABO_NUM_ABONADO
-FOREIGN KEY (NUM_ABONADO)
-REFERENCES GA_ABOCEL (NUM_ABONADO);
-
-ALTER TABLE GA_INTARCEL
-ADD CONSTRAINT FK_GA_INTARCEL_NUM_ABONADO
-FOREIGN KEY (NUM_ABONADO)
-REFERENCES GA_ABOCEL (NUM_ABONADO);
-
-ALTER TABLE TA_PLANTARIF
-ADD CONSTRAINT UQ_TA_PLANTARIF_NUM_ABONADO UNIQUE (NUM_ABONADO);
-
-ALTER TABLE GA_ABOCEL
-ADD CONSTRAINT FK_GA_ABOCEL_NUM_ABONADO
-FOREIGN KEY (NUM_ABONADO)
-REFERENCES TA_PLANTARIF (NUM_ABONADO);
-
---COD_SERVICIO (entidades relacionadas: TA_PLANTARIF, ICG_NIVELSERVICIO, GA_SERVSUPL, GA_SERVSUPLABO)
-
-ALTER TABLE TA_PLANTARIF
-ADD CONSTRAINT UQ_TA_PLANTARIF_COD_SERVICIO UNIQUE (COD_SERVICIO);
-
-ALTER TABLE ICG_NIVELSERVICIO
-ADD CONSTRAINT FK_ICG_NIVELSERVICIO_SERVICIO
-FOREIGN KEY (COD_SERVICIO)
-REFERENCES TA_PLANTARIF (COD_SERVICIO);
-
-ALTER TABLE GA_SERVSUPL
-ADD CONSTRAINT FK_GA_SERVSUPL_SERVICIO
-FOREIGN KEY (COD_SERVICIO)
-REFERENCES TA_PLANTARIF (COD_SERVICIO);
-
-ALTER TABLE GA_SERVSUPLABO
-ADD CONSTRAINT FK_GA_SERVSUPLABO_SERVICIO
-FOREIGN KEY (COD_SERVICIO)
-REFERENCES TA_PLANTARIF (COD_SERVICIO);
-
---COD_NIVEL (entidades relacionadas: ICG_NIVELSERVICIO, GA_SERVSUPL, GA_SERVSUPLABO)
-
-ALTER TABLE GA_SERVSUPL
-ADD CONSTRAINT FK_GA_SERVSUPL_NIVEL
-FOREIGN KEY (COD_NIVEL, COD_SERVICIO, COD_PRODUCTO)
-REFERENCES ICG_NIVELSERVICIO (COD_NIVEL, COD_SERVICIO, COD_PRODUCTO);
-
-ALTER TABLE GA_SERVSUPLABO
-ADD CONSTRAINT FK_GA_SERVSUPLABO_NIVEL
-FOREIGN KEY (COD_NIVEL, COD_SERVICIO, COD_PRODUCTO)
-REFERENCES ICG_NIVELSERVICIO (COD_NIVEL, COD_SERVICIO, COD_PRODUCTO);
-
---FEC_DESDE (entidades relacionadas: TA_PLANTARIF, GA_TIPCONTRATO, GA_PLANSERV, GA_INTARCEL)
-
-ALTER TABLE TA_PLANTARIF
-ADD CONSTRAINT UQ_TA_PLANTARIF_FEC_DESDE UNIQUE (FEC_DESDE);
-
-ALTER TABLE GA_TIPCONTRATO
-ADD CONSTRAINT FK_GA_TIPCONTRATO_FEC_DESDE
-FOREIGN KEY (FEC_DESDE)
-REFERENCES TA_PLANTARIF (FEC_DESDE);
-
-ALTER TABLE GA_PLANSERV
-ADD CONSTRAINT FK_GA_PLANSERV_FEC_DESDE
-FOREIGN KEY (FEC_DESDE)
-REFERENCES TA_PLANTARIF (FEC_DESDE);
-
-ALTER TABLE GA_INTARCEL
-ADD CONSTRAINT FK_GA_INTARCEL_FEC_DESDE
-FOREIGN KEY (FEC_DESDE)
-REFERENCES TA_PLANTARIF (FEC_DESDE);
-
---COD_OS (entidades relacionadas: CI_TIPORSERV, CI_ORSERV)
-
-ALTER TABLE CI_ORSERV
-ADD CONSTRAINT FK_CI_ORSERV_COD_OS
-FOREIGN KEY (COD_OS)
-REFERENCES CI_TIPORSERV (COD_OS);
-
-
-COD_CUENTA 
-
-Docker Microservicios/
-│
-└── docker-microservicios/
-    │          
-    └────usr/src/app   
-	       ├── docker-compose.yml
-	       ├── deployment.yaml
-	       ├── package-lock.json
-	       ├── index.js
-         ├── package.json
-	       └── microservicios/
-    		     └── servicios/
-    			            ├── abonadoCelular/
-    				          │    ├── Dockerfile
-    				          │    ├── actualizarAbonadoCelular.js
-    				          │    ├── crearAbonadoCelular.js
-    				          │    ├── eliminarAbonadoCelular.js
-    				          │    ├── obtenerAbonadoCelular.js
-    				          │    └── obtenerAbonadosCelular.js
-    				          │
-    				          ├── gestionCliente/
-    				          │   ├── Dockerfile
-    				          │   ├── actualizarCliente.js
-    				          │   ├── crearCliente.js
-    				          │   ├── eliminarCliente.js
-    				          │   └── obtenerCliente.js
-    				          │
-    				          ├── interfazCelular/
-    				          │   ├── Dockerfile
-    				          │   ├── actualizarInterfazCelular.js
-    				          │   ├── crearInterfazCelular.js
-    				          │   └── obtenerInterfazCelular.js
-    				      	  │
-              				├── serviciosSuplementario/
-                			│   ├── Dockerfile
-          			     	│   ├── actualizarServicioSuplementario.js
-              				│   ├── crearServicioSuplementario.js
-    			            │   ├── eliminarServicioSuplementario.js
-              				│   └── obtenerServicioSuplementario.js   
-              				│		
-              				└── serviciosSupAbo/
-         			            ├── Dockerfile
-                  			  ├── actualizarServicioSupAbo.js
-                  			  ├── crearServicioSupAbo.js
-                          ├── eliminarServicioSupAbo.js
-                  			  └── obtenerServicioSupAbo.js
+**Servicios de prueba**
+
+1) Abonados Celular:
+
+GET: 
+- http://localhost:3000/suscriber-manager-services/get-suscriber-number?suscriber-number=54845
+- http://localhost:3000/suscriber-manager-services/get-suscriber-number?suscriber-number=1001
+
+POST:
+- http://localhost:3000/suscriber-manager-services/create-suscriber
+
+Body -> raw
+
+{
+  "num_abonado": 1001,
+  "num_celular": 3111234567,
+  "cod_producto": 1,
+  "cod_cliente": 500,
+  "cod_cuenta": 300,
+  "cod_subcuenta": "S001",
+  "cod_usuario": 45,
+  "cod_region": "C01",
+  "cod_provincia": "P01",
+  "cod_ciudad": "C001",
+  "cod_celda": "CL01",
+  "cod_central": 101,
+  "cod_uso": 2,
+  "cod_situacion": "A",
+  "ind_procalta": "I",
+  "ind_procequi": "E",
+  "cod_vendedor": 201,
+  "cod_vendedor_agente": 101,
+  "tip_plantarif": "I",
+  "tip_terminal": "D",
+  "cod_plantarif": "PL1",
+  "cod_cargobasico": "CB1",
+  "cod_planserv": "PS1",
+  "cod_limconsumo": "LIM1",
+  "num_serie": "12345SERIE",
+  "num_seriehex": "A1B2C3",
+  "nom_usuara": "usuariox",
+  "fec_alta": "2024-10-22",
+  "num_percontrato": 1,
+  "cod_estado": "Activo",
+  "num_seriemec": "MECSERIE123",
+  "cod_holding": 10,
+  "cod_empresa": 55,
+  "cod_grpserv": "GS1",
+  "ind_supertel": 0,
+  "num_telefija": "1234567890",
+  "cod_opredfija": 15,
+  "cod_carrier": 101,
+  "ind_prepago": 1,
+  "ind_plexxys": 0,
+  "cod_central_plex": 100,
+  "num_celular_plex": 3111234568,
+  "num_venta": 890,
+  "cod_modventa": 12,
+  "cod_tipcontrato": "T01",
+  "num_contrato": "CON12345",
+  "num_anexo": "ANX12345",
+  "fec_cumplan": "2025-01-01",
+  "cod_credmor": 10,
+  "cod_credcon": 20,
+  "cod_ciclo": 5,
+  "ind_factur": 1,
+  "ind_suspen": 0,
+  "ind_rehabi": 1,
+  "ind_insguias": 1,
+  "fec_fincontra": "2026-01-01",
+  "fec_recdocum": "2024-11-01",
+  "fec_cumplimen": "2024-12-01",
+  "fec_acepventa": "2024-10-15",
+  "fec_actcen": "2024-10-20",
+  "fec_baja": null,
+  "fec_bajacen": null,
+  "fec_ultmod": "2024-10-22",
+  "cod_causabaja": "CB",
+  "num_personal": "P123",
+  "ind_seguro": 1,
+  "clase_servicio": "Clase1",
+  "perfil_abonado": "Perfil1",
+  "num_min": "730",
+  "cod_vendealer": 202,
+  "ind_disp": 1,
+  "cod_password": "pass123",
+  "ind_password": "1",
+  "cod_afinidad": 20,
+  "fec_prorroga": "2025-05-01",
+  "ind_eqprestado": "Y",
+  "flg_contdigi": "D",
+  "fec_altantras": "2025-01-01",
+  "cod_indemnizacion": 5,
+  "num_imei": "357123456789012",
+  "cod_tecnologia": "4G",
+  "num_min_mdn": "3101234567",
+  "fec_activacion": "2024-10-22",
+  "ind_telefono": 6,
+  "cod_oficina_principal": "OF1",
+  "cod_causa_venta": "C01",
+  "cod_operacion": "OP1",
+  "cod_prestacion": "P01",
+  "mto_valor_referencia": 123.45,
+  "cod_moneda": "USD",
+  "tipo_primariacarrier": "T01",
+  "obs_instancia": "Instancia de prueba"
+}
+
+Hacer lo mismo con uno existente para que salga el error de que ya existe*
+
+PUT:
+- http://localhost:3000/suscriber-manager-services/update-suscriber?suscriber-number=1001
+
+Body -> raw
+
+{
+  "cod_carrier": 102,
+  "ind_telefono": 7
+}
+
+Hacer lo mismo con un dato no existente*
+
+DELETE:
+- http://localhost:3000/suscriber-manager-services/delete-suscriber?customer-code=1001
+- http://localhost:3000/suscriber-manager-services/delete-suscriber?customer-code=548
+
+2) Gestion de cliente:
+
+GET: 
+- http://localhost:3000/customer-manager-services/get-customer-data?customer-code=3346
+- http://localhost:3000/customer-manager-services/get-customer-data?customer-code= 12345
+
+POST:
+- http://localhost:3000/customer-manager-services/create-customer
+
+Body -> raw
+
+{
+  "cod_cliente": 12345,
+  "nom_cliente": "juan perez",
+  "cod_tipident": "cc",
+  "num_ident": "1234567890",
+  "cod_calclien": "a1",
+  "ind_situacion": "a",
+  "fec_alta": "2023-10-20",
+  "ind_factur": 1,
+  "ind_traspaso": "n",
+  "ind_agente": "s",
+  "fec_ultmod": "2023-10-21",
+  "num_fax": "123-4567",
+  "ind_mandato": 0,
+  "nom_usuaraora": "usuario123",
+  "ind_alta": "s",
+  "cod_cuenta": 67890,
+  "ind_acepvent": "y",
+  "cod_abc": "a",
+  "cod_123": 1,
+  "cod_actividad": 101,
+  "cod_pais": "col",
+  "tef_cliente1": "123456789",
+  "num_abocel": 10,
+  "tef_cliente2": "987654321",
+  "num_abobeep": 5,
+  "ind_debito": "a",
+  "num_abotrunk": 2,
+  "cod_prospecto": 202,
+  "num_abotrek": 1,
+  "cod_sispago": 100,
+  "nom_apeclien1": "perez",
+  "nom_email": "juanperez@example.com",
+  "num_aborent": 2,
+  "nom_apeclien2": "garcia",
+  "num_aboroaming": 1,
+  "fec_acepvent": "2023-10-20",
+  "imp_stopdebit": 50000.00,
+  "cod_banco": "001",
+  "cod_sucursal": "a1",
+  "ind_tipcuenta": "c",
+  "cod_tiptarjeta": "101",
+  "num_ctacorr": "1234567890123456",
+  "num_tarjeta": "1234567890123456",
+  "fec_vencitarj": "2025-12-31",
+  "cod_bancotarj": "002",
+  "cod_tipidtrib": "02",
+  "num_identtrib": "6543210987",
+  "cod_tipidentapor": "01",
+  "num_identapor": "111222333",
+  "nom_apoderado": "maria gomez",
+  "cod_oficina": "of1",
+  "fec_baja": "2024-12-31",
+  "cod_cobrador": 300,
+  "cod_pincli": "1234",
+  "cod_ciclo": 10,
+  "num_celular": 3111234567,
+  "ind_tippersona": "f",
+  "cod_ciclonue": 15,
+  "cod_categoria": 5,
+  "cod_sector": 3,
+  "cod_supervisor": 201,
+  "ind_estcivil": "s",
+  "fec_nacimien": "1985-05-15",
+  "ind_sexo": "m",
+  "num_int_grup_fam": 4,
+  "cod_npi": 25,
+  "cod_subcategoria": "sub1",
+  "cod_uso": "usr1",
+  "cod_idioma": "1",
+  "cod_tipident2": "03",
+  "num_ident2": "9876543210",
+  "nom_usuario_asesor": "asesor123",
+  "cod_operadora": "tmg",
+  "ind_facturaelectronica": 0,
+  "nom_conyuge": "ana lopez",
+  "cod_operador": 400,
+  "mens_promo": "y",
+  "cod_profesion": 10,
+  "nom_empresa": "empresa s.a.",
+  "tef_oficina": "123-4567",
+  "cod_ocupacion": 8,
+  "imp_ingresos": 3000.00,
+  "nom_jefe": "carlos diaz",
+  "cant_anlabor": "5",
+  "nom_refer1": "laura mendoza",
+  "tef_refer1": "123456789",
+  "nom_refer2": "roberto ortiz",
+  "cod_tipo": "tip1",
+  "cod_color": "clr1",
+  "cod_crediticia": "b",
+  "cod_segmento": "1",
+  "cod_calificacion": "a",
+  "nom_titulartarjeta": "juan perez",
+  "obs_pac": "ninguna",
+  "tef_refer2": "987654321"
+}
+
+Hacer lo mismo con un dato no existente*
+
+PUT:
+- http://localhost:3000/customer-manager-services/update-customer?customer-code=12345
+
+Body -> raw
+
+{
+  "nom_empresa": "empresa t1 s.a.",
+  "tef_oficina": "12344-4567",
+}
+
+DELETE:
+- http://localhost:3000/customer-manager-services/delete-customer?customer-code=12345
+- http://localhost:3000/customer-manager-services/delete-customer?customer-code=548
+
+Hacer lo mismo con un dato no existente*
+
+3) Gestion de Productos:
+
+GET: 
+- http://localhost:3000/product-manager-services/get-product?product-code=5
+- http://localhost:3000/product-manager-services/get-product?product-code=2001
+
+POST:
+- http://localhost:3000/product-manager-servicess/create-product
+
+Body -> raw
+
+{
+  "cod_producto": 2001,
+  "des_producto": "Plan Celular Básico",
+  "ind_real": 1
+}
+
+Hacer lo mismo con un dato no existente*
+
+PUT:
+- http://localhost:3000/product-manager-services/update-customer?product-code=2001
+
+Body -> raw
+
+{
+  "des_producto": "Plan Celular Avanzado"
+}
+
+DELETE:
+- http://localhost:3000/product-manager-services/delete-product?product-code=2001
+- http://localhost:3000/product-manager-services/delete-product?product-code=548
+
+Hacer lo mismo con un dato no existente*
+
+4) Servicios Suplementarios:
+
+GET: 
+- http://localhost:3000/supplementary-services/get-supplementary-service?product-code=1&service-code=20
+- http://localhost:3000/supplementary-services/get-supplementary-service?product-code=1001&service-code=S01
+
+POST:
+- http://localhost:3000/supplementary-services/create-supplementary-service
+
+Body -> raw
+
+{
+  "cod_producto": 1001,
+  "cod_servicio": "S01",
+  "cod_servsupl": 2001,
+  "cod_nivel": 1,
+  "des_servicio": "Servicio de llamadas premium",
+  "ind_autman": "A",
+  "ind_comerc": 1,
+  "ind_pro": 1,
+  "ind_central": 1,
+  "cod_aplic": "Aplicación XYZ",
+  "ind_traspaso": 0,
+  "des_servicio_web": "Llamadas ilimitadas nacionales",
+  "ind_gestor": 0,
+  "ind_cobro": 0,
+  "ind_prioridad": 3,
+  "tip_servicio": "1",
+  "ind_tuxedo": 0,
+  "ind_infranet": 0,
+  "sub_categoria": "CAT01",
+  "tip_red": "M",
+  "ind_ip": 0,
+  "tip_cobro": "V",
+  "ind_cobretr": 0,
+  "ind_restringible": 0
+}
+
+Hacer lo mismo con uno existente para que salga el error de que ya existe*
+
+PUT:
+- http://localhost:3000/supplementary-services/update-customer?product-code=1001&service-code=S01
+
+Body -> raw
+
+{
+  "ind_prioridad": 2,
+  "sub_categoria": "CAT02"
+}
+
+Hacer lo mismo con un dato no existente*
+
+DELETE:
+- http://localhost:3000/supplementary-services/delete-customer?product-code=1001&service-code=S01
+- http://localhost:3000/supplementary-services/delete-customer?product-code=2&service-code=S
+
+Hacer lo mismo con uno existente para que salga el error de que ya existente
+
+5) Servicios Suplementarios de Abonados:
+
+GET: 
+- http://localhost:3000/abonado-supplementary-services/get-abonado-supplementary?abonado-number=33260412&service-code=11
+- http://localhost:3000/abonado-supplementary-servicess/get-abonado-supplementary?abonado-number=1002&service-code=S02
+
+POST:
+- http://localhost:3000/abonado-supplementary-services/create-abonado-supplementary
+
+Body -> raw
+
+{
+  "num_abonado": 1002,
+  "cod_servicio": "S02",
+  "fec_altabd": "2024-10-22",
+  "cod_servsupl": 1,
+  "cod_nivel": 2,
+  "cod_producto": 101,
+  "num_terminal": "TERM12345",
+  "nom_usuarora": "usuario123",
+  "ind_estado": 1,
+  "fec_altacen": "2024-10-22",
+  "fec_bajabd": null,
+  "fec_bajacen": null,
+  "cod_concepto": 100,
+  "num_diasnum": 30,
+  "cod_prioridad": 1,
+  "ind_desborde": "DPT"
+}
+
+Hacer lo mismo con un dato no existente*
+
+PUT:
+- http://localhost:3000/abonado-supplementary-services/update-abonado-supplementary?abonado-number=1002&service-code=S02
+
+Body -> raw
+
+{
+  "nom_usuarora": "usuario124",
+  "fec_bajabd": "2024-10-25",
+}
+
+
+DELETE:
+- http://localhost:3000/abonado-supplementary-services/delete-abonado-supplementary?abonado-number=1002&service-code=S02
+- http://localhost:3000/abonado-supplementary-services/delete-abonado-supplementary?abonado-number=54845&service-code=a
+Hacer lo mismo con un dato no existente*

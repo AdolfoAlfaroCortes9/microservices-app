@@ -15,7 +15,7 @@ const getClienteController = async (req, res) => {
     if (!cliente) {
       return res.json({ 
         status: 'denied', 
-        message: 'No existe ese dato en la tabla GE_CLIENTES' });
+        message: 'No existe ese cliente' });
     }
     res.json({ 
       status: 'success', 
@@ -40,7 +40,7 @@ const createClienteController = async (req, res) => {
 
   try {
     // Verificar si el cliente ya existe
-    const existingCliente = await Cliente.getClienteById(req.body.cod_cliente); // Suponiendo que 'cod_cliente' es único
+    const existingCliente = await Cliente.getCliente(req.body.cod_cliente); // Suponiendo que 'cod_cliente' es único
     if (existingCliente) {
       return res.status(409).json({
         status: 'denied', 
