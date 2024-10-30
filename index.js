@@ -1,9 +1,10 @@
 const express = require('express');
-const abonadoRoutes = require('./src/routes/abonadoRoutes');
-const clienteRoutes = require('./src/routes/clienteRoutes');
-const productoRoutes = require('./src/routes/productoRoutes');
-const servSuplRoutes = require('./src/routes/servSuplRoutes');
-const servSuplAbonadoRoutes = require('./src/routes/servSuplAbonadoRoutes');
+const suscriberRoutes = require('./src/routes/suscriberRoutes');
+const customerRoutes = require('./src/routes/customerRoutes');
+const productRoutes = require('./src/routes/productRoutes');
+const additionalServicesRoutes = require('./src/routes/additionalServicesRoutes');
+const suscriberAdditionalServicesRoutes = require('./src/routes/suscriberAdditionalServicesRoutes');
+const intarcelRoutes = require('./src/routes/intarcelRoutes');
 const { checkConnection } = require('./src/db'); 
 
 const app = express();
@@ -13,10 +14,10 @@ app.use(express.json());
 const checkDB = async () => {
   const connected = await checkConnection();
   if (connected) {
-    console.log('✅ Conexión a la base de datos establecida');
+    console.log('✅ Connection to the database established');
     return true;
   } else {
-    console.error('❌ Error al conectar a la base de datos');
+    console.error('❌ Error connecting to the database');
     return false;
   }
 };
@@ -25,7 +26,7 @@ const checkDB = async () => {
 const startServer = async () => {
   const dbConnected = await checkDB();
   if (!dbConnected) {
-    console.error('🚨 Servidor detenido debido a problemas de conexión a la base de datos');
+    console.error('🚨 Server stopped due to database connection problems');
     return;  // Detener el arranque del servidor si no se conecta a la base de datos
   }
 
@@ -37,11 +38,12 @@ const startServer = async () => {
 };
 
 // Rutas de la API
-app.use('/suscriber-manager-services', abonadoRoutes);
-app.use('/customer-manager-services', clienteRoutes);
-app.use('/product-manager-services', productoRoutes);
-app.use('/supplementary-services', servSuplRoutes);
-app.use('/abonado-supplementary-services', servSuplAbonadoRoutes);
+app.use('/suscriber-manager-services', suscriberRoutes);
+app.use('/customer-manager-services', customerRoutes);
+app.use('/product-manager-services', productRoutes);
+app.use('/additional-services', additionalServicesRoutes);
+app.use('/suscriber-additional-services', suscriberAdditionalServicesRoutes);
+app.use('/intarcel-services', intarcelRoutes)
 
 // Llamar a la función para iniciar el servidor
 startServer();

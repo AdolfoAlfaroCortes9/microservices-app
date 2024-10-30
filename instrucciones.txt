@@ -4,26 +4,29 @@ Docker-Microservicios/
 ├── microservicios-app/
 │   ├── src/
 │   │   ├── controllers/
-│   │   │   ├── abonadoController.js
-│   │   │   ├── clienteController.js
-│   │   │   ├── servSuplController.js
-│   │   │   └── servSuplAbonadoController.js
-│   │   ├── routes/
-│   │   │   ├── abonadoRoutes.js
-│   │   │   ├── clienteRoutes.js
-│   │   │   ├── servSuplRoutes.js
-│   │   │   └── servSuplAbonadoRoutes.js
+│   │   │   ├── suscriberController.js
+│   │   │   ├── customerController.js
+│   │   │   ├── productController.js
+│   │   │   ├── additionalServicesController.js
+│   │   │   └── suscriberAdditionalServicesController.js
 │   │   ├── models/
-│   │   │   ├── abonadoModel.js
-│   │   │   ├── clienteModel.js
-│   │   │   ├── servSuplModel.js
-│   │   │   └── servSuplAbonadoModel.js
+│   │   │   ├── suscriberModel.js
+│   │   │   ├── customerModel.js
+│   │   │   ├── productModel.js
+│   │   │   ├── additionalServicesModel.js
+│   │   │   └── suscriberAdditionalServicesModel.js
+│   │   ├── routes/
+│   │   │   ├── suscriberRoutes.js
+│   │   │   ├── customerRoutes.js
+│   │   │   ├── productRoutes.js
+│   │   │   ├── additionalServicesRoutes.js
+│   │   │   └── suscriberAdditionalServicesRoutes.js
 │   │   └── db.js
 │   ├── index.js
 │   ├── Dockerfile
 │   ├── docker-compose.yml
 │   ├── .env
-│   └── package.json
+└── └── package.json
 
 //Crear package.json e instalacion de dependencias por terminal
 
@@ -38,36 +41,17 @@ docker-compose up --build
 
 docker-compose down
 
+//Detener los servicios
+
+docker-compose stop
+
+//Activar los servicios
+
+docker-compose start
+
 //Formato de postman para requests
 
 Metodo: get
-Formato: localhost:3000/suscriber-manager-services/x_servicio?llave_servicio=x_llave
-
-Opción: post
-Formato: localhost:3000/suscriber-manager-services/x_crearservicio
-Seleccionar la opción Body en Postman.
-Luego elige la opción raw.
-Ingresar los datos a generar segun las columnas de la tabla
-
-{
-    x dato,
-    ... ,
-    n dato
-}
-
-Metodo: put
-Formato: localhost:3000/suscriber-manager-services/x_crearservicio
-Luego elige la opción raw.
-Ingresar los datos restantes que no sean llaves a modificar segun las columnas de la tabla
-
-{
-    x dato,
-    ... ,
-    n dato
-}
-
-Metodo: delete
-Formato: localhost:3000/suscriber-manager-services/x_servicio?llave_servicio=x_llave
-
+Formato: localhost:3000/n-ruta-servicios/x_servicio?llave_servicio=x_llave
 
 

@@ -13,11 +13,11 @@ const pool = new Pool({
 const checkConnection = async () => {
   try {
     const client = await pool.connect();
-    console.log('✅ Conexión a la base de datos establecida');
+    console.log('✅ Connection to the database established');
     client.release();
     return true;
   } catch (err) {
-    console.error('❌ Error al conectar a la base de datos', err);
+    console.error('❌ Error connecting to database', err);
     return false;
   }
 };
