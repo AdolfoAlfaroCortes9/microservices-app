@@ -6,6 +6,13 @@ const getAdditionalService = async (cod_producto, cod_servicio) => {
   return res.rows[0];
 };
 
+// Obtener un servicio suplementario por su código de servicio
+const searchService = async (cod_servicio) => {
+  const res = await pool.query('SELECT * FROM ga_servsupl WHERE cod_servicio = $1', [cod_servicio]);
+  return res.rows[0];
+}
+
 module.exports = { 
-  getAdditionalService 
+  getAdditionalService,
+  searchService 
 };

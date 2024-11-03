@@ -4,23 +4,11 @@ Docker-Microservicios/
 ├── microservicios-app/
 │   ├── src/
 │   │   ├── controllers/
-│   │   │   ├── suscriberController.js
-│   │   │   ├── customerController.js
-│   │   │   ├── productController.js
-│   │   │   ├── additionalServicesController.js
-│   │   │   └── suscriberAdditionalServicesController.js
+│   │   │   └── los archivos controladores.js
 │   │   ├── models/
-│   │   │   ├── suscriberModel.js
-│   │   │   ├── customerModel.js
-│   │   │   ├── productModel.js
-│   │   │   ├── additionalServicesModel.js
-│   │   │   └── suscriberAdditionalServicesModel.js
+│   │   │   └── los archivos modelos.js
 │   │   ├── routes/
-│   │   │   ├── suscriberRoutes.js
-│   │   │   ├── customerRoutes.js
-│   │   │   ├── productRoutes.js
-│   │   │   ├── additionalServicesRoutes.js
-│   │   │   └── suscriberAdditionalServicesRoutes.js
+│   │   │   └── los archivos rutas.js
 │   │   └── db.js
 │   ├── index.js
 │   ├── Dockerfile
@@ -54,4 +42,8 @@ docker-compose start
 Metodo: get
 Formato: localhost:3000/n-ruta-servicios/x_servicio?llave_servicio=x_llave
 
+//Comandos en caso de que los puertos asignados realizacen otras tareas
+
+consulta de estado de puerto: netstat -ano | findstr :(numero de puerto)
+termina tarea de puerto: taskkill /PID (x pid usado del puerto) /F //en caso de no funcionar en el editor de texto, usar la terminal del computador con acceso de administrador
 

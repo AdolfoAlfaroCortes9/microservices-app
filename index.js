@@ -4,7 +4,7 @@ const customerRoutes = require('./src/routes/customerRoutes');
 const productRoutes = require('./src/routes/productRoutes');
 const additionalServicesRoutes = require('./src/routes/additionalServicesRoutes');
 const suscriberAdditionalServicesRoutes = require('./src/routes/suscriberAdditionalServicesRoutes');
-const intarcelRoutes = require('./src/routes/intarcelRoutes');
+const pricingPeriodRoutes = require('./src/routes/pricingPeriodRoutes');
 const { checkConnection } = require('./src/db'); 
 
 const app = express();
@@ -43,7 +43,7 @@ app.use('/customer-manager-services', customerRoutes);
 app.use('/product-manager-services', productRoutes);
 app.use('/additional-services', additionalServicesRoutes);
 app.use('/suscriber-additional-services', suscriberAdditionalServicesRoutes);
-app.use('/intarcel-services', intarcelRoutes)
+app.use('/pricing-period-services', pricingPeriodRoutes)
 
 // Llamar a la función para iniciar el servidor
 startServer();
