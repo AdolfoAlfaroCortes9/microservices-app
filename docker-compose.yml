@@ -8,11 +8,8 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - DB_HOST=db
-      - DB_PORT=5432
-      - DB_USER=postgres
-      - DB_PASSWORD=2620ac
-      - DB_DATABASE=microservices_db
+      - DOPPLER_TOKEN=${DOPPLER_TOKEN} # Se necesita que esté configurado en el entorno local
+    command: doppler run -- npm start # Ejecuta el proyecto con las variables de Doppler
     depends_on:
       db:
         condition: service_healthy

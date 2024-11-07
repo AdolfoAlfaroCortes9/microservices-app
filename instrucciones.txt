@@ -21,21 +21,26 @@ Docker-Microservicios/
 npm init -y
 npm install express pg dotenv
 
-//Creacion de contenedores por teminal
+//Instalacion de CLI de Doppler:
 
-docker-compose up --build
+curl -Ls https://cli.doppler.com/install.sh | sh
 
-//Cerrar los contenedores
+//Autenticación de CLI de Doppler
 
-docker-compose down
+doppler login
+doppler setup
 
-//Detener los servicios
+// Creación de contenedores con Doppler en terminal
+doppler run -- docker-compose up --build
 
-docker-compose stop
+// Cerrar los contenedores
+doppler run -- docker-compose down
 
-//Activar los servicios
+// Detener los servicios
+doppler run -- docker-compose stop
 
-docker-compose start
+// Activar los servicios
+doppler run -- docker-compose start
 
 //Formato de postman para requests
 
