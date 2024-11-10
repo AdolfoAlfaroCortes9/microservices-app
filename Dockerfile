@@ -1,5 +1,9 @@
-# Imagen de Node.js versión 14 
+# Imagen base de Node.js
 FROM node:14
+
+# Instalación de Doppler CLI
+RUN apt-get update && apt-get install -y curl && \
+    curl -Ls https://cli.doppler.com/install.sh | sh
 
 # Directorio de trabajo dentro del contenedor
 WORKDIR /app
@@ -16,6 +20,5 @@ COPY . .
 # Puerto de la aplicación
 EXPOSE 3000
 
-# Comando que ejecuta la aplicación cuando el contenedor se inicia
-CMD ["node", "index.js"]
-
+# Comando que ejecuta la aplicación utilizando Doppler
+CMD ["doppler", "run", "--", "node", "index.js"]

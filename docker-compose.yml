@@ -8,8 +8,8 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - DOPPLER_TOKEN=${DOPPLER_TOKEN} # Se necesita que esté configurado en el entorno local
-    command: doppler run -- npm start # Ejecuta el proyecto con las variables de Doppler
+      - DOPPLER_TOKEN=${DOPPLER_TOKEN} # Token cargado desde el entorno o manualmente
+    command: doppler run -- npm start # Ejecuta la aplicación usando Doppler
     depends_on:
       db:
         condition: service_healthy
@@ -24,15 +24,16 @@ services:
     ports:
       - "5433:5432"
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 2620ac
-      POSTGRES_DB: microservices_db
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_DATABASE}
+    command: doppler run -- postgres # Ejecuta PostgreSQL usando Doppler para cargar variables
     volumes:
       - postgres-data:/var/lib/postgresql/data
     networks:
       - microservice-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER}"]
       interval: 10s
       timeout: 5s
       retries: 5
