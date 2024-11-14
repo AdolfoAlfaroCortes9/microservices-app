@@ -14,22 +14,16 @@ const formatDates = (data) => {
 
 // Obtener un servicio suplementario de abonado por número de abonado y código de servicio
 const getSuscriberAdditionalService = async (num_abonado, cod_servicio) => {
-  const res = await pool.query(
-    'SELECT * FROM ga_servsuplabo WHERE num_abonado = $1 AND cod_servicio = $2',
-    [num_abonado, cod_servicio]
-  );
-  return formatDates(res.rows[0]); // Formatea las fechas antes de devolver
+  const query = `CALL sp_get_suscriber_additional_service($1, $2)`;
+  const res = await pool.query(query, [num_abonado, cod_servicio]);
+  return formatDates(res.rows[0]);
 };
 
 // Obtener código de servicio, fecha de alta y código de servicio suplementario de un abonado en específico
 const getSpecificSubscriberService = async (num_abonado) => {
-  const query = `
-    SELECT cod_servicio, fec_altabd, cod_servsupl
-    FROM ga_servsuplabo
-    WHERE num_abonado = $1
-  `;
+  const query = `CALL sp_get_specific_subscriber_service($1)`;
   const result = await pool.query(query, [num_abonado]);
-  return result.rows.map(formatDates); // Formatea las fechas para cada fila
+  return result.rows.map(formatDates);
 };
 
 module.exports = {  

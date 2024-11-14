@@ -12,10 +12,8 @@ const formatDates = (data) => {
 
 // Obtener detalles de un abonado específico por número de abonado
 const getSubscriberDetails = async (num_abonado) => {
-  const res = await pool.query(
-    'SELECT * FROM ga_intarcel WHERE num_abonado = $1',
-    [num_abonado]
-  );
+  const query = `CALL sp_get_subscriber_details($1)`;
+  const res = await pool.query(query, [num_abonado]);
   return res.rows.map(formatDates);
 };
 
